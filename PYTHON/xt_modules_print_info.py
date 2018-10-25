@@ -68,7 +68,7 @@ def print_module_info(device_name):
     return OrderCode
 
 
-def print_sesnor_settings(xethru_sensor):
+def print_sensor_settings(xethru_sensor):
     # Check values (to confirm we have the values we want):
     print("")
     print("********** Current sensor settings **********")
@@ -124,14 +124,14 @@ def main():
 
     print_module_info(device_name)
     """ 
-    # print_sesnor_settings for xethru sensor  xethru_sensor
+    # print_sensor_settings for xethru sensor  xethru_sensor
     configuration for sensor setting output
     mc = ModuleConnector(device_name)
     mc.get_xep()
     x4m200 = mc.get_x4m200()
     x4m200.set_sensor_mode(XTS_SM_STOP, 0)
     x4m200.load_profile(XTS_ID_APP_RESPIRATION_2) # need to be change according to sensors
-    print_sesnor_settings(x4m200) 
+    print_sensor_settings(x4m200) 
     """
 
 

@@ -36,7 +36,7 @@ from pymoduleconnector.extras.auto import auto
 from pymoduleconnector.ids import *
 
 from xt_modules_print_info import print_module_info
-from xt_modules_print_info import print_sesnor_settings
+from xt_modules_print_info import print_sensor_settings
 from xt_modules_record_playback_messages import start_record
 from xt_modules_record_playback_messages import start_player
 
@@ -123,7 +123,7 @@ def configure_x4m200(device_name, record=False, x4m200_settings=x4m200_par_setti
             setter_set(value)
         print("Setting %s to %s" % (variable, value))
 
-    print_sesnor_settings(x4m200)
+    print_sensor_settings(x4m200)
 
     print('Set module to RUN mode')
     try:
