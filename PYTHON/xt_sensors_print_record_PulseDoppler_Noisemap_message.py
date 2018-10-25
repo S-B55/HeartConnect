@@ -27,6 +27,7 @@ import numpy as np
 import pymoduleconnector
 from pymoduleconnector import ModuleConnector
 from pymoduleconnector import DataType
+from pymoduleconnector.extras.auto import auto
 from pymoduleconnector import DataRecorder
 from pymoduleconnector.ids import *
 
@@ -123,7 +124,7 @@ def configure_sensor_dp_output(device_name, record, datatype, format, dopplers, 
     return xt_sensor
 
 
-def print_dp_messages(xt_sensor, datatype, format)
+def print_dp_messages(xt_sensor, datatype, format, num_messages):
 # Set up state machinery for matrix assembly
     matrix = []
     is_negative = True
@@ -200,7 +201,7 @@ def print_dp_messages(xt_sensor, datatype, format)
                 data = pre + data
 
         if len(matrix) <= pkt.range_idx:
-            matrix.xt_sensorend([])
+            matrix.append([])
 
         matrix[pkt.range_idx].extend(data)
 
@@ -270,8 +271,9 @@ def main():
         except:
             print("Fail to find serial port, please specify it by use -d!")
             raise
-    print_dp_messages(device_name, options.record, options.datatype,
-                      options.format, options.dopplers, options.num_messages)
+    xt_sensor = configure_sensor_dp_output(device_name, options.record, options.datatype, options.format, options.dopplers, options.num_messages);
+    print_dp_messages(xt_sensor, options.datatype,
+                      options.format,options.num_messages)
 
 
 if __name__ == "__main__":
