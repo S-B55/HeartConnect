@@ -16,17 +16,20 @@
 
 
 # Command to run: 
-# 1. Use "python xt_modules_plot_record_playback_radar_raw_data_message.py" to plot radar raw data. If device is not be automatically recognized,add argument "-d com8" to specify device. change "com8" with your device name, using "--help" to see other options. Using TCP server address as device name is also supported by specify TCP address like "-d tcp://192.168.1.169:3000".
+# 1. Use "python xt_modules_plot_record_playback_radar_raw_data_message.py" to plot radar raw data. If device is not be automatically recognized,add argument "-d com8" to specify device. change "com8" with your device name, using "--help" to see other args. Using TCP server address as device name is also supported by specify TCP address like "-d tcp://192.168.1.169:3000".
 # 2. Default radar raw data type is RF data, add "-b" to switch to baseband data plot.
 # 3. add "-r" to enable recording during radar data plot.
 # 4. use  "python xt_modules_plot_record_playback_radar_raw_data_message.py -f xethru_recording_xxxx/xethru_recording_meta.dat" to play back recording file. Add "-b" if the recording is baseband data. 
 """
 from __future__ import print_function, division
 import sys
-from optparse import OptionParser
+from argparse import ArgumentParser
 
 import numpy as np
+import queue
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib.colors import cnames
 from matplotlib.animation import FuncAnimation
 
 import pymoduleconnector
@@ -47,12 +50,12 @@ x4_par_settings = {'downconversion': 0,  # 0: output rf data; 1: output baseband
                    'iterations': 16,
                    'pulses_per_step': 300,
                    'frame_area_offset': 0.18,
-                   'frame_area': (-0.5, 2),
+                   'frame_area': (-0.5, 3),
                    'fps': 17,
                    }
 
 
-def configure_x4(device_name, record=False, baseband=False, x4_settings=x4_par_settings):
+def configure_x4(device_name, record=False, baseband=True, x4_settings=x4_par_settings):
     mc = pymoduleconnector.ModuleConnector(device_name)
     # Assume an X4M300/X4M200 module and try to enter XEP mode
     app = mc.get_x4m200()
@@ -98,7 +101,7 @@ def configure_x4(device_name, record=False, baseband=False, x4_settings=x4_par_s
     return xep
 
 
-def plot_radar_raw_data_message(xep, baseband=False):
+def plot_radar_raw_data_message(xep, baseband=True, frames_number=1):
     def read_frame():
         """Gets frame data from module"""
         d = xep.read_message_data_float()
@@ -107,68 +110,101 @@ def plot_radar_raw_data_message(xep, baseband=False):
         # Convert the resulting frame to a complex array if downconversion is enabled
         if baseband:
             n = len(frame)
-            frame = frame[:n//2] + 1j*frame[n//2:]
+            frame = abs((frame[:n//2] + 1j*frame[n//2:]))
         return frame
+    # initialization function: plot the background of each frame
 
-    def animate(i):
-        if baseband:
-            line.set_ydata(abs(read_frame()))  # update the data
-        else:
-            line.set_ydata(read_frame())
-        return line,
+    def init():
+        for i in range(len(frames)):
+            lines[0].set_data(x, Y[i])
+            lines[0].set_3d_properties(frames[i])
+        return lines
+
+    def update_lines(ii):
+        q.appendleft(read_frame())
+        for i in range(len(lines)):
+            lines[i].set_data(x, Y[i])
+            lines[i].set_3d_properties(q[i])
+            # print q[i][0],
+        # ax.plot_wireframe(X,Y,q)
+        fig.canvas.draw()
+        return lines
+
+    frames = np.array([read_frame() for i in range(frames_number)])
+    rangebins_number = len(frames[0])
+    fps = xep.x4driver_get_fps()
 
     fig = plt.figure()
-    fig.suptitle("Radar Raw Data")
-    ax = fig.add_subplot(1, 1, 1)
+    ax = fig.add_subplot(111, projection='3d')
+    # ax.axis('off')
     # keep graph in frame (FIT TO YOUR DATA), can be adjusted
-    ax.set_ylim(0 if baseband else -0.15, 0.15)
-    frame = read_frame()
-    if baseband:
-        frame = abs(frame)
-    line, = ax.plot(frame)
+    ax.set_xlabel('Range Bins Number: ' + str(rangebins_number))
+    ax.set_ylabel('Frames Number: ' + str(frames_number))
+    # ax.set_zlabel('Power')
+    ax.set_zlim3d(0 if baseband else -0.15, 0.15)
 
-    ani = FuncAnimation(fig, animate, interval=0)
-    try:
-        plt.show()
-    except:
-        print('Messages output finish!')
-    sys.exit(0)
+    x = np.arange(rangebins_number)
+    y = np.arange(frames_number)
+    # y=np.arange(len(frames[0]))
+    X, Y = np.meshgrid(x, y)
+    q = queue.deque(frames, frames_number)
+    colors = ['b']*frames_number
+    colors[0] = 'r'
+    lines = [ax.plot(x, Y[i], frames[i], '-', color=colors[i])[0]
+             for i in range(frames_number)]
+    anim = FuncAnimation(fig, update_lines, interval=1 /
+                         (2*fps)*1e3, init_func=init, blit=True)
+    plt.show()
 
 
 def main():
-    parser = OptionParser()
-    parser.add_option(
+    parser = ArgumentParser()
+    parser.add_argument(
         "-d",
         "--device",
         dest="device_name",
         help="device file to use",
         metavar="FILE")
-    parser.add_option(
+    parser.add_argument(
         "-b",
         "--baseband",
         action="store_true",
-        default=False,
+        default=True,
         dest="baseband",
-        help="Enable baseband output, rf data is default")
-    parser.add_option(
+        help="Enable baseband output")
+    parser.add_argument(
+        "-rf",
+        "--radiofrequency",
+        action="store_false",
+        dest="baseband",
+        help="Enable rf output")
+    parser.add_argument(
+        "-n",
+        "--framesnumber",
+        metavar="NUMBER",
+        type=int,
+        default=20,
+        dest="frames_number",
+        help="Decide how mange frames shown on plotting")
+    parser.add_argument(
         "-r",
         "--record",
         action="store_true",
         default=False,
         dest="record",
         help="Enable recording")
-    parser.add_option(
+    parser.add_argument(
         "-f",
         "--file",
         dest="meta_filename",
         metavar="FILE",
         help="meta file from recording")
 
-    (options, args) = parser.parse_args()
+    args = parser.parse_args()
 
-    if not options.meta_filename:
-        if options.device_name:
-            device_name = options.device_name
+    if not args.meta_filename:
+        if args.device_name:
+            device_name = args.device_name
         else:
             try:
                 device_name = auto()[0]
@@ -177,13 +213,14 @@ def main():
                 raise
         print_module_info(device_name)
         xep = configure_x4(device_name,
-                           options.record, options.baseband, x4_par_settings)
+                           args.record, args.baseband, x4_par_settings)
     else:
-        player = start_player(meta_filename=options.meta_filename)
+        player = start_player(meta_filename=args.meta_filename)
         mc = ModuleConnector(player, log_level=0)
         xep = mc.get_xep()
 
-    plot_radar_raw_data_message(xep, baseband=options.baseband)
+    plot_radar_raw_data_message(
+        xep, baseband=args.baseband, frames_number=args.frames_number)
 
 
 if __name__ == "__main__":
