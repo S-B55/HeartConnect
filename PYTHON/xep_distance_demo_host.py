@@ -1,13 +1,13 @@
 #!/usr/bin/env python
-""" \example xt_modules_plot_record_playback_radar_raw_data_message.py
+""" \example xep_distance_demo_host.py
 
 #Target module: 
-#X4M200
-#X4M300
-#X4M03(XEP)
+#X4M03(running XEP Distance Demo)
 
-#Introduction: XeThru modules support both RF and baseband data output. This is an example of radar raw data manipulation. 
-               Developer can use Module Connecter API to read, record radar raw data, and also playback recorded data. 
+XEP Distance Demo: https://www.xethru.com/community/resources/xep-x4-distance-demo.89/
+
+#Introduction: This is XEP distance demo host side example. It can plot baseband data and print presence and distance infomation from module.
+This example is modified from "xt_modules_plot_record_playback_radar_raw_data_message.py".
 
 # prerequisite:
 # ModuleConnector python lib is installed, check XeThruSensorsIntroduction application note to get detail
@@ -16,9 +16,9 @@
 
 
 # Command to run: 
-# 1. Use "python xt_modules_plot_record_playback_radar_raw_data_message.py" to plot radar raw data. If device is not be automatically recognized,add argument "-d com8" to specify device. change "com8" with your device name, using "--help" to see other args. Using TCP server address as device name is also supported by specify TCP address like "-d tcp://192.168.1.169:3000".
+# 1. Use "python xep_distance_demo_host.py" to plot radar raw data. If device is not be automatically recognized,add argument "-d com8" to specify device. change "com8" with your device name, using "--help" to see other args. Using TCP server address as device name is also supported by specify TCP address like "-d tcp://192.168.1.169:3000".
 # 2. add "-r" to enable recording.
-# 3. use  "python xt_modules_plot_record_playback_radar_raw_data_message.py -f xethru_recording_xxxx/xethru_recording_meta.dat" to play back recording file. Add "-b" if the recording is baseband data. 
+# 4. use  "python xep_distance_demo_host.py -f xethru_recording_xxxx/xethru_recording_meta.dat" to play back recording file. Add "-b" if the recording is baseband data. 
 """
 from __future__ import print_function, division
 import sys
@@ -41,18 +41,6 @@ from pymoduleconnector.ids import *
 from xt_modules_print_info import *
 from xt_modules_record_playback_messages import *
 
-# User settings
-x4_par_settings = {'downconversion': 0,  # 0: output rf data; 1: output baseband data
-                   'dac_min': 949,
-                   'dac_max': 1100,
-                   'dac_step': 0,  # real dac step is 1 when set dac_step = 0
-                   'iterations': 16,
-                   'pulses_per_step': 300,
-                   'frame_area_offset': 0.18,
-                   'frame_area': (-0.5, 3),
-                   'fps': 17,
-                   }
-
 
 def configure_x4(device_name, record=False, baseband=True, x4_settings=x4_par_settings):
     mc = pymoduleconnector.ModuleConnector(device_name)
@@ -73,29 +61,13 @@ def configure_x4(device_name, record=False, baseband=True, x4_settings=x4_par_se
     print('Clearing buffer')
     while xep.peek_message_data_float():
         xep.read_message_data_float()
+    while xep.peek_message_data_string():
+        xep.read_message_data_string()
+
     print('Start recorder if recording is enabled')
     if record:
         start_record(mc)
 
-    print('Set specific parameters')
-    # Make sure that enable is set, X4 controller is programmed, ldos are enabled, and that the external oscillator has been enabled.
-    xep.x4driver_init()
-    x4_settings['downconversion'] = int(baseband)
-    for variable, value in x4_settings.items():
-        try:
-            # if 'output_control' in variable:
-            #     variable = 'output_control'
-            setter = getattr(xep, 'x4driver_set_' + variable)
-        except AttributeError as e:
-            print("X4 does not have a setter function for '%s'." % variable)
-            raise e
-
-        if isinstance(value, tuple):
-            setter(*value)
-        else:
-            setter(value)
-
-        print("Setting %s to %s" % (variable, value))
     print_x4_settings(xep)
     return xep
 
@@ -103,8 +75,15 @@ def configure_x4(device_name, record=False, baseband=True, x4_settings=x4_par_se
 def plot_radar_raw_data_message(xep, baseband=True, frames_number=1):
     def read_frame():
         """Gets frame data from module"""
+        # content_id = 0
+        # info = 0
+        # data = "hello"
+        # rdata = xep.read_message_data_string(&content_id, &info, data)
+        # print("Info: content_id: {} info: {} data: {} .".format(
+        #     content_id, info, data))
         d = xep.read_message_data_float()
         frame = np.array(d.data)
+        print(frame)
         #print('frame length:' + str(len(frame)))
         # Convert the resulting frame to a complex array if downconversion is enabled
         if baseband:
