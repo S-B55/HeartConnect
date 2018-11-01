@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 """ \example xep_distance_demo_host.py
 
-#Target module: 
-#X4M03(running XEP Distance Demo)
+# Target module:
+# X4M03(running XEP Distance Demo)
 
 XEP Distance Demo: https://www.xethru.com/community/resources/xep-x4-distance-demo.89/
 
-#Introduction: This is XEP distance demo host side example. It can plot baseband data and print presence and distance infomation from module.
+# Introduction: This is XEP distance demo host side example. It can plot baseband data and print presence and distance infomation from module.
 This example is modified from "xt_modules_plot_record_playback_radar_raw_data_message.py".
 
 # prerequisite:
@@ -15,10 +15,10 @@ This example is modified from "xt_modules_plot_record_playback_radar_raw_data_me
 # xt_modules_record_playback_messages.py should be in the same folder
 
 
-# Command to run: 
+# Command to run:
 # 1. Use "python xep_distance_demo_host.py" to plot radar raw data. If device is not be automatically recognized,add argument "-d com8" to specify device. change "com8" with your device name, using "--help" to see other args. Using TCP server address as device name is also supported by specify TCP address like "-d tcp://192.168.1.169:3000".
 # 2. add "-r" to enable recording.
-# 4. use  "python xep_distance_demo_host.py -f xethru_recording_xxxx/xethru_recording_meta.dat" to play back recording file. Add "-b" if the recording is baseband data. 
+# 4. use  "python xep_distance_demo_host.py -f xethru_recording_xxxx/xethru_recording_meta.dat" to play back recording file. Add "-b" if the recording is baseband data.
 """
 from __future__ import print_function, division
 import sys
@@ -40,6 +40,18 @@ from pymoduleconnector.ids import *
 
 from xt_modules_print_info import *
 from xt_modules_record_playback_messages import *
+
+# User settings
+x4_par_settings = {'downconversion': 0,  # 0: output rf data; 1: output baseband data
+                   'dac_min': 949,
+                   'dac_max': 1100,
+                   'dac_step': 0,  # real dac step is 1 when set dac_step = 0
+                   'iterations': 16,
+                   'pulses_per_step': 300,
+                   'frame_area_offset': 0.18,
+                   'frame_area': (-0.5, 3),
+                   'fps': 17,
+                   }
 
 
 def configure_x4(device_name, record=False, baseband=True, x4_settings=x4_par_settings):
@@ -73,18 +85,20 @@ def configure_x4(device_name, record=False, baseband=True, x4_settings=x4_par_se
 
 
 def plot_radar_raw_data_message(xep, baseband=True, frames_number=1):
+    mc_i = pymoduleconnector.moduleconnectorwrapper
+    id_ptr = mc_i.new_uint32_t_ptr()
+    info_ptr = mc_i.new_uint32_t_ptr()
+    data = mc_i.new_string_ptr()
+
     def read_frame():
         """Gets frame data from module"""
-        # content_id = 0
-        # info = 0
-        # data = "hello"
-        # rdata = xep.read_message_data_string(&content_id, &info, data)
-        # print("Info: content_id: {} info: {} data: {} .".format(
-        #     content_id, info, data))
+        xep.read_message_data_string(id_ptr, info_ptr, data)
+        print("Info: content_id: {} info: {} data: {} .".format(
+            mc_i.uint32_t_ptr_value(id_ptr), mc_i.uint32_t_ptr_value(info_ptr), mc_i.string_ptr_value(data)))
         d = xep.read_message_data_float()
         frame = np.array(d.data)
-        print(frame)
-        #print('frame length:' + str(len(frame)))
+        # print(frame)
+        # print('frame length:' + str(len(frame)))
         # Convert the resulting frame to a complex array if downconversion is enabled
         if baseband:
             n = len(frame)
