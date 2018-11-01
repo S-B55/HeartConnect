@@ -6,7 +6,7 @@
 # X4M300
 
 # Introduction:
-# XeThru sensors support baseband IQ or Amplitude-Phase data output at application level. Developer can use Module Connecter API to read, record baseband IQ or AF data.
+# XeThru sensors support baseband IQ or Amplitude-Phase data output at application level. Developer can use Module Connecter API to read, record baseband IQ or AP data.
 
 # prerequisite:
 # ModuleConnector python lib is installed, check XeThruSensorsIntroduction application note to get detail
