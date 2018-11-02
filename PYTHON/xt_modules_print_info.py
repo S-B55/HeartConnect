@@ -18,7 +18,7 @@
 """
 from __future__ import print_function, division
 import sys
-from optparse import OptionParser
+from argparse import ArgumentParser
 
 import pymoduleconnector
 from pymoduleconnector import ModuleConnector
@@ -104,17 +104,17 @@ def print_x4_settings(xep):
 
 
 def main():
-    parser = OptionParser()
-    parser.add_option(
+    parser = ArgumentParser()
+    parser.add_argument(
         "-d",
         "--device",
         dest="device_name",
         help="Seral port name used by target XeThru sensor, i.e com8, /dev/ttyACM0",
         metavar="FILE")
 
-    (options, args) = parser.parse_args()
-    if options.device_name:
-        device_name = options.device_name
+    args = parser.parse_args()
+    if args.device_name:
+        device_name = args.device_name
     else:
         try:
             device_name = auto()[0]

@@ -1,5 +1,6 @@
 # Blacklist files/folders in same directory as the .gitignore file
 /python/__pycache__
 /.vscode
+*.log
 # Whitelist some files
 # !

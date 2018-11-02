@@ -14,13 +14,13 @@
 # xt_modules_record_playback_messages.py should be in the same folder
 
 # Command to run: "python xt_sensors_plot_record_movinglist_message.py -d com8" or "python3 xt_sensors_plot_record_movinglist_message.py -d com8"
-                 change "com8" with your device name, using "--help" to see other options.
+                 change "com8" with your device name, using "--help" to see other args.
                  Using TCP server address as device name is also supported, e.g.
                  "python xt_sensors_plot_record_movinglist_message.py -d tcp://192.168.1.169:3000".
 """
 from __future__ import print_function
 import sys
-from optparse import OptionParser
+from argparse import ArgumentParser
 
 from time import sleep
 import collections
@@ -189,14 +189,14 @@ def plot_record_movinglist_messages(device_name, record=False):
 
 
 def main():
-    parser = OptionParser()
-    parser.add_option(
+    parser = ArgumentParser()
+    parser.add_argument(
         "-d",
         "--device",
         dest="device_name",
         help="device file to use",
         metavar="FILE")
-    parser.add_option(
+    parser.add_argument(
         "-r",
         "--record",
         action="store_true",
@@ -204,16 +204,16 @@ def main():
         dest="record",
         help="Enable recording")
 
-    (options, args) = parser.parse_args()
-    if options.device_name:
-        device_name = options.device_name
+    args = parser.parse_args()
+    if args.device_name:
+        device_name = args.device_name
     else:
         try:
             device_name = auto()[0]
         except:
             print("Fail to find serial port, please specify it by use -d!")
             raise
-    plot_record_movinglist_messages(device_name, options.record)
+    plot_record_movinglist_messages(device_name, args.record)
 
 
 if __name__ == "__main__":

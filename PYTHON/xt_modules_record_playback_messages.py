@@ -18,7 +18,7 @@
 """
 from __future__ import print_function, division
 import sys
-from optparse import OptionParser
+from argparse import ArgumentParser
 
 import pymoduleconnector
 from pymoduleconnector import ModuleConnector
@@ -64,32 +64,32 @@ def start_player(meta_filename, depth=-1):
 
 
 def main():
-    parser = OptionParser()
-    parser.add_option(
+    parser = ArgumentParser()
+    parser.add_argument(
         "-d",
         "--device",
         dest="device_name",
         help="Seral port name used by target XeThru sensor, i.e com8, /dev/ttyACM0",
         metavar="FILE")
-    parser.add_option(
+    parser.add_argument(
         "-r",
         "--record",
         action="store_true",
         default=False,
         dest="record",
         help="Enable recording")
-    parser.add_option(
+    parser.add_argument(
         "-f",
         "--file",
         dest="meta_filename",
         metavar="FILE",
         help="meta file from recording")
 
-    (options, args) = parser.parse_args()
+    args = parser.parse_args()
 
-    if not options.meta_filename:
-        if options.device_name:
-            device_name = options.device_name
+    if not args.meta_filename:
+        if args.device_name:
+            device_name = args.device_name
         else:
             try:
                 device_name = auto()[0]
@@ -99,7 +99,7 @@ def main():
         mc = ModuleConnector(device_name)
         start_record(mc)
     else:
-        start_player(meta_filename=options.meta_filename)
+        start_player(meta_filename=args.meta_filename)
 
 
 if __name__ == "__main__":

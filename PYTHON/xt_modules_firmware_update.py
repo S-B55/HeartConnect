@@ -12,7 +12,7 @@
 # ModuleConnector python lib is installed, check XeThruSensorsIntroduction application note to get detail
 
 # Command to run: 
-# "python xt_module_firmware_update.py -f Annapurna_4bl_cert.hex", using "--help" to see other options.
+# "python xt_module_firmware_update.py -f Annapurna_4bl_cert.hex", using "--help" to see other args.
 Latest firmware can be download from: https://www.xethru.com/community/resources/annapurna-firmware.98/
 """
 import intelhex
@@ -21,7 +21,7 @@ from pymoduleconnector import Bootloader
 from pymoduleconnector.ids import *
 from pymoduleconnector.extras.auto import auto
 from time import sleep
-from optparse import OptionParser
+from argparse import ArgumentParser
 
 
 def goto_bootloader(device_name):
@@ -101,8 +101,8 @@ def display_information(device_name):
 
 
 def main():
-    parser = OptionParser()
-    parser.add_option(
+    parser = ArgumentParser()
+    parser.add_argument(
         "-s",
         "--skip",
         action="store_true",
@@ -110,7 +110,7 @@ def main():
         default=False,
         help="skip goto bootloader")
 
-    parser.add_option(
+    parser.add_argument(
         "-f",
         "--file",
         dest="hex_file_name",
@@ -118,7 +118,7 @@ def main():
         help="hex file to flash",
         metavar="FILE")
 
-    parser.add_option(
+    parser.add_argument(
         "-d",
         "--device",
         dest="device_name",
@@ -126,11 +126,11 @@ def main():
         help="device file to use",
         metavar="FILE")
 
-    (options, args) = parser.parse_args()
+    args = parser.parse_args()
 
-    upgrade_fw(options.hex_file_name, options.skip_goto, options.device_name)
+    upgrade_fw(args.hex_file_name, args.skip_goto, args.device_name)
     sleep(3)
-    display_information(options.device_name)
+    display_information(args.device_name)
 
 
 if __name__ == "__main__":

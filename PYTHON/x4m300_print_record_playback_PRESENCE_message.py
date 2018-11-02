@@ -12,13 +12,13 @@
 # xt_modules_record_playback_messages.py should be in the same folder
 
 # Command to run: 
-# 1. Use "python x4m300_print_record_playback_PRESENCE_message.py" to print application message. If device is not be automatically recognized,add argument "-d com8" to specify device. change "com8" with your device name, using "--help" to see other options. Using TCP server address as device name is also supported by specify TCP address like "-d tcp://192.168.1.169:3000". Add "-r" to enable recording during application messages printing out.
+# 1. Use "python x4m300_print_record_playback_PRESENCE_message.py" to print application message. If device is not be automatically recognized,add argument "-d com8" to specify device. change "com8" with your device name, using "--help" to see other args. Using TCP server address as device name is also supported by specify TCP address like "-d tcp://192.168.1.169:3000". Add "-r" to enable recording during application messages printing out.
 # 2. Use "python x4m300_print_record_playback_PRESENCE_message.py -f xethru_recording_xxxx/xethru_recording_meta.dat" to play back recording file.
 
 """
 from __future__ import print_function, division
 import sys
-from optparse import OptionParser
+from argparse import ArgumentParser
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -134,32 +134,32 @@ def print_x4m300_messages(x4m300):
 
 
 def main():
-    parser = OptionParser()
-    parser.add_option(
+    parser = ArgumentParser()
+    parser.add_argument(
         "-d",
         "--device",
         dest="device_name",
         help="Seral port name used by target XeThru sensor, i.e com8, /dev/ttyACM0",
         metavar="FILE")
-    parser.add_option(
+    parser.add_argument(
         "-r",
         "--record",
         action="store_true",
         default=False,
         dest="record",
         help="Enable recording")
-    parser.add_option(
+    parser.add_argument(
         "-f",
         "--file",
         dest="meta_filename",
         metavar="FILE",
         help="meta file from recording")
 
-    (options, args) = parser.parse_args()
+    args = parser.parse_args()
 
-    if not options.meta_filename:
-        if options.device_name:
-            device_name = options.device_name
+    if not args.meta_filename:
+        if args.device_name:
+            device_name = args.device_name
         else:
             try:
                 device_name = auto()[0]
@@ -168,9 +168,9 @@ def main():
                 raise
         print_module_info(device_name)
         x4m300 = configure_x4m300(
-            device_name, options.record, x4m300_par_settings)
+            device_name, args.record, x4m300_par_settings)
     else:
-        player = start_player(meta_filename=options.meta_filename)
+        player = start_player(meta_filename=args.meta_filename)
         mc = ModuleConnector(player, log_level=0)
         x4m300 = mc.get_x4m300()
     print_x4m300_messages(x4m300)

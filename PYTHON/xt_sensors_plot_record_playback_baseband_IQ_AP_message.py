@@ -14,12 +14,12 @@
 # xt_modules_record_playback_messages.py should be in the same folder
 
 # Command to run:
-# "python xt_sensors_plot_record_baseband_IQ_AP_message.py -d com8", change "com8" with your device name, using "--help" to see other options. Using TCP server address as device name is also supported, e.g. "python xt_sensors_plot_record_baseband_IQ_AP_message.py -d tcp://192.168.1.169:3000".
+# "python xt_sensors_plot_record_baseband_IQ_AP_message.py -d com8", change "com8" with your device name, using "--help" to see other args. Using TCP server address as device name is also supported, e.g. "python xt_sensors_plot_record_baseband_IQ_AP_message.py -d tcp://192.168.1.169:3000".
 """
 from __future__ import print_function, division
 
 import sys
-from optparse import OptionParser
+from argparse import ArgumentParser
 from time import sleep
 
 import numpy as np
@@ -167,39 +167,39 @@ def plot_sensor_bb_message(xt_sensor, data_type="iq"):
 
 
 def main():
-    parser = OptionParser()
-    parser.add_option(
+    parser = ArgumentParser()
+    parser.add_argument(
         "-d",
         "--device",
         dest="device_name",
         help="device file to use",
         metavar="FILE")
-    parser.add_option(
+    parser.add_argument(
         "-t",
         "--data_type",
         dest="data_type",
         default="iq",
         help="Data to get. iq or ap",  # only one option can be choose
         metavar="TYPE")
-    parser.add_option(
+    parser.add_argument(
         "-r",
         "--record",
         action="store_true",
         default=False,
         dest="record",
         help="Enable recording")
-    parser.add_option(
+    parser.add_argument(
         "-f",
         "--file",
         dest="meta_filename",
         metavar="FILE",
         help="meta file from recording")
 
-    (options, args) = parser.parse_args()
+    args = parser.parse_args()
 
-    if not options.meta_filename:
-        if options.device_name:
-            device_name = options.device_name
+    if not args.meta_filename:
+        if args.device_name:
+            device_name = args.device_name
         else:
             try:
                 device_name = auto()[0]
@@ -208,13 +208,13 @@ def main():
                 raise
 
         xt_sensor = configure_sensor_bb_output(
-            device_name, options.record, options.data_type)
+            device_name, args.record, args.data_type)
 
     else:
-        player = start_player(meta_filename=options.meta_filename)
+        player = start_player(meta_filename=args.meta_filename)
         mc = ModuleConnector(player, log_level=0)
         xt_sensor = mc.get_x4m200()
-    plot_sensor_bb_message(xt_sensor, options.data_type)
+    plot_sensor_bb_message(xt_sensor, args.data_type)
 
 
 if __name__ == "__main__":

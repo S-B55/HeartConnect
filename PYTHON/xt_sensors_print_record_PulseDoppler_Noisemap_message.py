@@ -14,11 +14,11 @@
 # xt_modules_record_playback_messages.py should be in the same folder
 
 # Command to run:  "python xt_sensors_plot_record_PulseDoppler_Noisemap_message.py -d com8" or "python3 xt_sensors_plot_record_PulseDoppler_Noisemap_message.py -d com8"
-                  change "com8" with your device name, using "--help" to see other options.
+                  change "com8" with your device name, using "--help" to see other args.
 """
 
 from __future__ import print_function
-from optparse import OptionParser
+from argparse import ArgumentParser
 import sys
 import time
 
@@ -214,21 +214,21 @@ def print_dp_messages(xt_sensor, datatype, format, num_messages):
 
 
 def main():
-    parser = OptionParser()
-    parser.add_option(
+    parser = ArgumentParser()
+    parser.add_argument(
         "-d",
         "--device",
         dest="device_name",
         help="device file to use, example: python %s -d COM4" % sys.argv[0],
         metavar="FILE")
-    parser.add_option(
+    parser.add_argument(
         "-r",
         "--record",
         action="store_true",
         default=False,
         dest="record",
         help="Enable recording")
-    parser.add_option(
+    parser.add_argument(
         "-w",
         "--datatype",
         dest="datatype",
@@ -236,7 +236,7 @@ def main():
         help="Data to get. pulsedoppler or noisemap",
         metavar="TYPE")
 
-    parser.add_option(
+    parser.add_argument(
         "-f",
         "--format",
         dest="format",
@@ -244,7 +244,7 @@ def main():
         help="Data format to get. byte or float",
         metavar="FORMAT")
 
-    parser.add_option(
+    parser.add_argument(
         "-m",
         "--dopplers",
         dest="dopplers",
@@ -252,7 +252,7 @@ def main():
         help="Which pD instance to get. fast, slow or both.",
         metavar="FORMAT")
 
-    parser.add_option(
+    parser.add_argument(
         "-n",
         "--num-messages",
         dest="num_messages",
@@ -261,19 +261,19 @@ def main():
         help="how many matrices to read (0 = infinite)",
         metavar="INT")
 
-    (options, args) = parser.parse_args()
+    args = parser.parse_args()
 
-    if options.device_name:
-        device_name = options.device_name
+    if args.device_name:
+        device_name = args.device_name
     else:
         try:
             device_name = auto()[0]
         except:
             print("Fail to find serial port, please specify it by use -d!")
             raise
-    xt_sensor = configure_sensor_dp_output(device_name, options.record, options.datatype, options.format, options.dopplers, options.num_messages);
-    print_dp_messages(xt_sensor, options.datatype,
-                      options.format,options.num_messages)
+    xt_sensor = configure_sensor_dp_output(device_name, args.record, args.datatype, args.format, args.dopplers, args.num_messages);
+    print_dp_messages(xt_sensor, args.datatype,
+                      args.format,args.num_messages)
 
 
 if __name__ == "__main__":
