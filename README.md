@@ -11,11 +11,11 @@ https://www.xethru.com/community/resources/module-connector-raspberry-pi.81/
 
 # Example Folder Structure
 
-* /CPP
-* /MATLAB
-* /PYTHON
-* README.md
-* LICENSE.md
+* [/CPP]()
+* [/MATLAB](https://github.com/xethru/XeThru-ModuleConnector-Examples/tree/master/MATLAB)
+* [/PYTHON](https://github.com/xethru/XeThru-ModuleConnector-Examples/tree/master/PYTHON)
+* [README.md](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/README.md)
+* [LICENSE.md](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/LICENSE.md)
 
 # Example Content
 
