@@ -1,3 +1,5 @@
+% Latest examples is located at https://github.com/xethru/XeThru-ModuleConnector-Examples.
+% 
 % Target module: 
 % X4M300
 % 

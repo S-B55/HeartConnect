@@ -1,3 +1,14 @@
+% Latest examples is located at https://github.com/xethru/XeThru-ModuleConnector-Examples.
+% 
+% Target:
+% all examples
+% 
+% Introduction:
+% This function add ModuleConnector lib addresses according to your operating system.
+% 
+% prerequisite:
+% this script should be placed in ModuleConnector\matlab\examples folder,
+
 function addModuleConnectorPath(optarg)
 
     addpath('../../matlab/');

@@ -5,7 +5,7 @@
 Latest examples is located at https://github.com/xethru/XeThru-ModuleConnector-Examples.
 
 # Target module: 
-# # XeThru module using X4 chip, running firmware with bootloader.
+# XeThru module using X4 chip, running firmware with bootloader.
 
 # Introduction: 
 # This is an example of how to update X4M200, X4M300 firmware.

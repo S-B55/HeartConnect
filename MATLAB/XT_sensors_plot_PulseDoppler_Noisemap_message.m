@@ -1,17 +1,21 @@
-% This example illustrates how to set up the x4 module for streaming
-% pulse-Doppler matrices and how to assemble and plot these.
+% Latest examples is located at https://github.com/xethru/XeThru-ModuleConnector-Examples.
+% 
+% Target module: 
+% X4M200
+% X4M300
+% 
+% Introduction: 
+% This example illustrates how to set up the x4 based sensors for streaming
+% pulse-Doppler matrices and how to assemble and plot them out.
 %
-% To complete the following example you need:
-% - An X4M200 or X4M300 module
-% - The ModuleConnector library
-% - MATLAB
-%
+% prerequisite:
+% this example should be placed in ModuleConnector\matlab\examples folder,
+% check XeThruSensorsIntroduction application note to get details.
 
 %add paths
-addpath('../../matlab/');
-addpath('../../include/');
-addpath('../../lib64/');
-% or addpath('../../lib32/');
+addModuleConnectorPath();
+% if running on a 32-bit Windows system, instead run:
+% addModuleConnectorPath('win32');
 
 clc
 clear
