@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 """ \example x4m300_print_record_playback_PRESENCE_message.py
 
+Latest examples is located at https://github.com/xethru/XeThru-ModuleConnector-Examples.
+
 # Target module: X4M300
 
 # Introduction: This is an example of how to print out application messages from X4M300 module.

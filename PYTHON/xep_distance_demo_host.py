@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 """ \example xep_distance_demo_host.py
 
+Latest examples is located at https://github.com/xethru/XeThru-ModuleConnector-Examples.
+
 # Target module:
 # X4M03(running XEP Distance Demo)
 
@@ -18,7 +20,7 @@ This example is modified from "xt_modules_plot_record_playback_radar_raw_data_me
 # Command to run:
 # 1. Use "python xep_distance_demo_host.py" to plot radar raw data. If device is not be automatically recognized,add argument "-d com8" to specify device. change "com8" with your device name, using "--help" to see other args. Using TCP server address as device name is also supported by specify TCP address like "-d tcp://192.168.1.169:3000".
 # 2. add "-r" to enable recording.
-# 4. use  "python xep_distance_demo_host.py -f xethru_recording_xxxx/xethru_recording_meta.dat" to play back recording file. Add "-b" if the recording is baseband data.
+# 3. use  "python xep_distance_demo_host.py -f xethru_recording_xxxx/xethru_recording_meta.dat" to play back recording file. Add "-b" if the recording is baseband data.
 """
 from __future__ import print_function, division
 import sys

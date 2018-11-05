@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 """ \example x4m200_print_record_playback_RESP_SLEEP_message.py
 
+Latest examples is located at https://github.com/xethru/XeThru-ModuleConnector-Examples.
+
 # Target module:
 # X4M200
 

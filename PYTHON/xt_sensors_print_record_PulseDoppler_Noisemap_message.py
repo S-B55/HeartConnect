@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 """ \example xt_sensors_plot_record_PulseDoppler_Noisemap_message.py
 
+Latest examples is located at https://github.com/xethru/XeThru-ModuleConnector-Examples.
+
 # Target module:
 # X4M200
 # X4M300

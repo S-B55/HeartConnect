@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 """ \example xt_modules_record_playback_messages.py
 
+Latest examples is located at https://github.com/xethru/XeThru-ModuleConnector-Examples.
+
 # Target module:
 #X4M200
 #X4M300
