@@ -1,6 +1,6 @@
 # ModuleConnector-Examples
 This repo contains latest CPP/PYTHON/MATLAB examples for ModuleConnector based XeThru moudle development.
-New version ModuleConnector will contain this example folder when it be released. 
+New version ModuleConnector will contain latest examples from this repository when it is released. 
 
 ModuleConnector download address:
 
@@ -15,6 +15,7 @@ https://www.xethru.com/community/resources/module-connector-raspberry-pi.81/
 * /MATLAB
 * /PYTHON
 * README.md
+* LICENSE.md
 
 # Example Content
 
@@ -23,29 +24,34 @@ https://www.xethru.com/community/resources/module-connector-raspberry-pi.81/
 ## MATLAB examples
 
 1. Profile messages for the normal user
-* x4m300_print_record_playback_PRESENCE_message.m
-* x4m200_print_record_playback_RESP_SLEEP_message.m
+* [x4m200_print_record_playback_RESP_SLEEP_message.m](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/MATLAB/x4m200_print_record_RESP_SLEEP_message.m)
+* [x4m300_print_record_playback_PRESENCE_message.m](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/MATLAB/x4m300_print_record_PRESENCE_message.m)
+
 
 2. Radar DSP data message for the advanced user
-* xt_sensors_plot_PulseDoppler_Noisemap_message.m
+* [xt_sensors_plot_PulseDoppler_Noisemap_message.m](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/MATLAB/XT_sensors_plot_PulseDoppler_Noisemap_message.m)
+
+3. Assistant functions
+* [addModuleConnectorPath.m](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/MATLAB/addModuleConnectorPath.m)
 
 ## Python examples
 
 1. Profile messages for the normal user
-* x4m300_print_record_playback_PRESENCE_message.py
-* x4m200_print_record_playback_RESP_SLEEP_message.py
+* [x4m200_print_record_playback_RESP_SLEEP_message.py](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/PYTHON/x4m200_print_record_playback_RESP_SLEEP_message.py)
+* [x4m300_print_record_playback_PRESENCE_message.py](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/PYTHON/x4m300_print_record_playback_PRESENCE_message)
+
 
 2. Radar DSP data message for the advanced user
-* xt_modules_plot_record_playback_radar_raw_data_message.py        
-* xt_sensors_plot_record_playback_baseband_IQ_AP_message.py
-* xt_sensors_print_record_PulseDoppler_Noisemap_message.py
+* [xt_modules_plot_record_playback_radar_raw_data_message.py](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/PYTHON/xt_modules_plot_record_playback_radar_raw_data_message.py)        
+* [xt_sensors_plot_record_playback_baseband_IQ_AP_message.py](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/PYTHON/xt_sensors_plot_record_playback_baseband_IQ_AP_message.py)
+* [xt_sensors_print_record_PulseDoppler_Noisemap_message.py](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/PYTHON/xt_sensors_print_record_PulseDoppler_Noisemap_message.py)
 
 3. Other X4 based XeThru module examples
-* xt_modules_print_info.py
-* xt_modules_record_playback_messages.py  
-* xt_modules_firmware_update.py 
-* xt_modules_access_registers.py
-* xep_distance_demo_host.py
+* [xt_modules_print_info.py](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/PYTHON/xt_modules_print_info.py)
+* [xt_modules_record_playback_messages.py](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/PYTHON/xt_modules_record_playback_messages.py)  
+* [xt_modules_firmware_update.py](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/PYTHON/xt_modules_firmware_update.py) 
+* [xt_modules_access_registers.py](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/PYTHON/xt_modules_access_registers.py)
+* [xep_distance_demo_host.py](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/PYTHON/xep_distance_demo_host.py)
 
 
- 
+
