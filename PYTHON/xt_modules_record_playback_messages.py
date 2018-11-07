@@ -9,18 +9,14 @@ Latest examples is located at https://github.com/xethru/XeThru-ModuleConnector-E
 #X4M03(XEP)
 
 # Introduction:
-# This is an example of how to record and play back XeThru Module output data.
+# This script contains function on how to record and play back XeThru Module output data. Funtions are used by other examples, please refer to other examples for how to record and playback XeThru module data.
 
 # prerequisite:
 # ModuleConnector python lib is installed, check XeThruSensorsIntroduction application note to get detail
 
-# Command to run:
-# 1. Use "xt_modules_record_playback_messages.py -r" directly. If device is not be automatically recognized,add argument "-d com8" to specify device. change "com8" with your device name.
-# 2. Use "xt_modules_record_playback_messages.py -f xethru_recording_xxxx/xethru_recording_meta.dat" to configure player, need plot or print funciton to show recording data, so start_player is used by other examples.
 """
 from __future__ import print_function, division
 import sys
-from argparse import ArgumentParser
 
 import pymoduleconnector
 from pymoduleconnector import ModuleConnector
@@ -63,46 +59,3 @@ def start_player(meta_filename, depth=-1):
     player.play()
     print("Player start to palyback data. If print or plot function is configured, it should start to work!")
     return player
-
-
-def main():
-    parser = ArgumentParser()
-    parser.add_argument(
-        "-d",
-        "--device",
-        dest="device_name",
-        help="Seral port name used by target XeThru sensor, i.e com8, /dev/ttyACM0",
-        metavar="FILE")
-    parser.add_argument(
-        "-r",
-        "--record",
-        action="store_true",
-        default=False,
-        dest="record",
-        help="Enable recording")
-    parser.add_argument(
-        "-f",
-        "--file",
-        dest="meta_filename",
-        metavar="FILE",
-        help="meta file from recording")
-
-    args = parser.parse_args()
-
-    if not args.meta_filename:
-        if args.device_name:
-            device_name = args.device_name
-        else:
-            try:
-                device_name = auto()[0]
-            except:
-                print("Fail to find serial port, please specify it by use -d!")
-                raise
-        mc = ModuleConnector(device_name)
-        start_record(mc)
-    else:
-        start_player(meta_filename=args.meta_filename)
-
-
-if __name__ == "__main__":
-    main()
