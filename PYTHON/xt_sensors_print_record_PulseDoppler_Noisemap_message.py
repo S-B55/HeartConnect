@@ -34,7 +34,7 @@ from pymoduleconnector import DataRecorder
 from pymoduleconnector.ids import *
 
 from xt_modules_print_info import print_module_info
-from xt_modules_record_playback_messages import start_record
+from xt_modules_record_playback_messages import start_recorder
 from x4m200_print_record_playback_RESP_SLEEP_message import configure_x4m200
 from x4m300_print_record_playback_PRESENCE_message import configure_x4m300
 from x4m300_print_record_playback_PRESENCE_message import configure_x4m300

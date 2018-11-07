@@ -33,7 +33,7 @@ from pymoduleconnector.ids import *
 
 from xt_modules_print_info import print_module_info
 from xt_modules_print_info import print_sensor_settings
-from xt_modules_record_playback_messages import start_record
+from xt_modules_record_playback_messages import start_recorder
 from xt_modules_record_playback_messages import start_player
 
 presence_sensor_state_text = ("NO_PRESENCE", "PRESENCE", "INITIALIZING")
@@ -84,7 +84,7 @@ def configure_x4m300(device_name, record=False, x4m300_settings=x4m300_par_setti
 
     print('Start recorder if recording is enabled')
     if record:
-        start_record(mc)  # , DataType.PresenceSingleDataType)
+        start_recorder(mc)  # , DataType.PresenceSingleDataType)
 
     print('Ensuring no Xethru profile running')
     try:

@@ -77,7 +77,7 @@ def configure_x4(device_name, record=False, baseband=True, x4_settings=x4_par_se
         xep.read_message_data_float()
     print('Start recorder if recording is enabled')
     if record:
-        start_record(mc)
+        start_recorder(mc)
 
     print('Set specific parameters')
     # Make sure that enable is set, X4 controller is programmed, ldos are enabled, and that the external oscillator has been enabled.

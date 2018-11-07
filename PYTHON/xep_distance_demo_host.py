@@ -80,7 +80,7 @@ def configure_x4(device_name, record=False, baseband=True, x4_settings=x4_par_se
 
     print('Start recorder if recording is enabled')
     if record:
-        start_record(mc)
+        start_recorder(mc)
 
     print_x4_settings(xep)
     return xep

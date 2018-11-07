@@ -28,7 +28,7 @@ from pymoduleconnector.extras.auto import auto
 from pymoduleconnector.ids import *
 
 
-def start_record(mc):
+def start_recorder(mc):
 
     def on_file_available(data_type, filename):
         print("Recording data message file available for data type: {}".format(data_type))

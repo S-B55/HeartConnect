@@ -39,7 +39,7 @@ from pymoduleconnector.ids import *
 
 from xt_modules_print_info import print_module_info
 from xt_modules_print_info import print_sensor_settings
-from xt_modules_record_playback_messages import start_record
+from xt_modules_record_playback_messages import start_recorder
 from xt_modules_record_playback_messages import start_player
 
 respiration_sensor_state_text = (
@@ -98,7 +98,7 @@ def configure_x4m200(device_name, record=False, x4m200_settings=x4m200_par_setti
 
     print('Start recorder if recording is enabled')
     if record:
-        start_record(mc)
+        start_recorder(mc)
 
     print('Ensuring no Xethru profile running')
     try:
