@@ -7,20 +7,23 @@
 % This is an example of how to print out application messages from X4M300 module.
 %
 % prerequisite:
-% this example should be placed in ModuleConnector\matlab\examples folder,
-% check XeThruSensorsIntroduction application note to get details.
+% 1. this example should be placed in ModuleConnector\matlab\examples
+% folder.
+% 2. disp_module_info.m and disp_sensor_settings.m in the same folder.
+%
+% How to run:
+% Change User configurations section according to your needs.
 
 %add paths
-addModuleConnectorPath();
+add_ModuleConnector_path();
 % if running on a 32-bit Windows system, instead run:
 % addModuleConnectorPath('win32');
 
 clc
 clear
-
 %% User configurations:
 % Select comport 
-device_name = 'COM1';
+device_name = 'COM13';
 % Enable/disable recording
 rec = 0; 
 % sensor configurations:
@@ -32,9 +35,8 @@ sensitivity = 5;
 noisemap_control = 6; %use default noise map to start quickly (approximately 20s)
 pres_movinglist_message = hex2dec('723bfa1f'); %movinglist message 
 pres_signal_message = hex2dec('723bfa1e'); %presence signal message 
-
-
 %% Configure X4M300
+disp_module_info(device_name);
 % Load the library
 ModuleConnector.Library;
 % Moduleconnector object and X4M300 interface
@@ -48,18 +50,18 @@ if rec
     recorder = mc.get_data_recorder();
     % Set session id.
     recorder.set_session_id('Presence_recording');
-    
     movinglist_datatype = ModuleConnector.DataRecorderInterface.DataType_PresenceMovingListDataType;
     recorder.start_recording(movinglist_datatype, output_dir);
 end
 
 % Empty buffer 
-while X4M300.peek_message_presence_movinglist > 0
-    X4M300.read_message_presence_movinglist(); 
-end
 while X4M300.peek_message_presence_single > 0
     X4M300.read_message_presence_single(); 
 end
+while X4M300.peek_message_presence_movinglist > 0
+    X4M300.read_message_presence_movinglist(); 
+end
+
 
 % sensor configuration
 X4M300.set_sensor_mode('stop');
@@ -183,10 +185,6 @@ if rec
     recorder.stop_recording(movinglist_datatype);
 end
 X4M300.set_sensor_mode('stop');
-X4M300.module_reset();
 
 % Clean up.
-clear mc;
-clear X4M300;
-clear Lib;
-clearvars;
+clear;
