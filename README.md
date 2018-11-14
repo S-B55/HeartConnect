@@ -24,15 +24,19 @@ https://www.xethru.com/community/resources/module-connector-raspberry-pi.81/
 ## MATLAB examples
 
 1. Profile messages for the normal user
-* [x4m200_print_record_playback_RESP_SLEEP_message.m](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/MATLAB/x4m200_print_record_RESP_SLEEP_message.m)
-* [x4m300_print_record_playback_PRESENCE_message.m](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/MATLAB/x4m300_print_record_PRESENCE_message.m)
+* [x4m200_plot_record_RESP_SLEEP_message.m](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/MATLAB/x4m200_plot_record_RESP_SLEEP_message.m)
+* [x4m300_plot_record_PRESENCE_message.m](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/MATLAB/x4m300_plot_record_PRESENCE_message.m)
 
 
 2. Radar DSP data message for the advanced user
-* [xt_sensors_plot_PulseDoppler_Noisemap_message.m](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/MATLAB/XT_sensors_plot_PulseDoppler_Noisemap_message.m)
+* [xt_modules_plot_record_playback_radar_raw_data_message.m](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/MATLAB/xt_modules_plot_record_playback_radar_raw_data_message.m)
+* [xt_sensors_plot_PulseDoppler_Noisemap_message.m](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/MATLAB/xt_sensors_plot_PulseDoppler_Noisemap_message.m)
 
 3. Assistant functions
-* [addModuleConnectorPath.m](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/MATLAB/addModuleConnectorPath.m)
+* [add_ModuleConnector_path.m ](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/MATLAB/add_ModuleConnector_path.m)
+* [disp_module_info.m ](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/MATLAB/disp_module_info.m)
+* [disp_sensor_settings.m ](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/MATLAB/disp_sensor_settings.m)
+* [disp_x4_settings.m ](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/MATLAB/disp_x4_settings.m)
 
 ## Python examples
 
