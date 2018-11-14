@@ -44,7 +44,7 @@ from xt_modules_print_info import *
 from xt_modules_record_playback_messages import *
 
 # User settings
-x4_par_settings = {'downconversion': 0,  # 0: output rf data; 1: output baseband data
+x4_par_settings = {'downconversion': 1,  # 0: output rf data; 1: output baseband data
                    'dac_min': 949,
                    'dac_max': 1100,
                    'iterations': 16,
@@ -141,11 +141,10 @@ def plot_radar_raw_data_message(xep, baseband=True, frames_number=1):
     ax.set_xlabel('Range Bins Number: ' + str(rangebins_number))
     ax.set_ylabel('Frames Number: ' + str(frames_number))
     # ax.set_zlabel('Power')
-    ax.set_zlim3d(0 if baseband else -0.15, 0.15)
+    ax.set_zlim3d(0 if baseband else -0.08, 0.08)
 
     x = np.arange(rangebins_number)
     y = np.arange(frames_number)
-    # y=np.arange(len(frames[0]))
     X, Y = np.meshgrid(x, y)
     q = queue.deque(frames, frames_number)
     colors = ['b']*frames_number
