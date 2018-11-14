@@ -47,7 +47,6 @@ from xt_modules_record_playback_messages import *
 x4_par_settings = {'downconversion': 0,  # 0: output rf data; 1: output baseband data
                    'dac_min': 949,
                    'dac_max': 1100,
-                   'dac_step': 0,  # real dac step is 1 when set dac_step = 0
                    'iterations': 16,
                    'pulses_per_step': 300,
                    'frame_area_offset': 0.18,
