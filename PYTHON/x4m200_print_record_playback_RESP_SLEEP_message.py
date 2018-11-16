@@ -76,6 +76,14 @@ def configure_x4m200(device_name, record=False, x4m200_settings=x4m200_par_setti
     mc = ModuleConnector(device_name)
     x4m200 = mc.get_x4m200()
 
+    ''' Following setting will enalbe debug info which contains MCU workload
+    mc = ModuleConnector(device_name, log_level=2)
+    x4m200 = mc.get_x4m200()
+    x4m200.set_debug_level(9)
+    mc.get_not_supported().set_parameter_file(
+        "profiling.par", "[Debug]\nprofileReportPeriod=10;\n")
+    '''
+
     print('Clearing buffer')
     while x4m200.peek_message_baseband_iq():
         x4m200.read_message_baseband_iq()
