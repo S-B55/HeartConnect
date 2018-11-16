@@ -9,20 +9,24 @@
 % pulse-Doppler matrices and how to assemble and plot them out.
 %
 % prerequisite:
-% this example should be placed in ModuleConnector\matlab\examples folder,
-% check XeThruSensorsIntroduction application note to get details.
+% 1. this example should be placed in ModuleConnector\matlab\examples
+% folder.
+% 2. disp_module_info.m and disp_sensor_settings.m in the same folder.
+%
+% How to run:
+% Change User configurations section according to your needs. 
 
 %add paths
-addModuleConnectorPath();
+add_ModuleConnector_path();
 % if running on a 32-bit Windows system, instead run:
-% addModuleConnectorPath('win32');
+% add_ModuleConnector_path('win32');
 
 clc
 clear
 
-% Specify parameters
-COMPORT             = 'COM13';           % Device com-port
-options.interface   = 'x4m300';         % Interface to use. x4m300 or x4m200
+%% User configurations:
+device_name         = 'COM13';           % Device com-port
+%options.interface   = 'x4m300';         % Interface to use. x4m300 or x4m200
 options.datatype    = 'pulsedoppler';   % Data to get. pulsedoppler or noisemap
 options.format      = 'float';          % Data format to get. byte or float
 options.dopplers    = 'both';           % PD instance to get. fast, slow or both
@@ -31,14 +35,15 @@ detection_zone_start = 0.4;
 detection_zone_end = 5;
 
 % Load the library
+options.interface = disp_module_info(device_name);
 Lib = ModuleConnector.Library;
 
 % Create ModuleConnector object
-clear mc; mc = ModuleConnector.ModuleConnector(COMPORT,0);
+clear mc; mc = ModuleConnector.ModuleConnector(device_name,0);
 pause(1)
 
 % Get interface and load a profile
-if strcmp( options.interface, 'x4m200' )
+if strcmp( options.interface, 'X4M200' )
     app = mc.get_x4m200();
     app.set_sensor_mode('stop');
     
@@ -46,7 +51,7 @@ if strcmp( options.interface, 'x4m200' )
     ProfileID_Respiration2 = hex2dec('064e57ad');
     ret = app.load_profile(ProfileID_Respiration2);
     
-elseif strcmp( options.interface, 'x4m300' )
+elseif strcmp( options.interface, 'X4M300' )
     app = mc.get_x4m300();
     app.set_sensor_mode('stop');
     
@@ -240,6 +245,13 @@ end
 app.set_sensor_mode('stop');
 
 
+% Clean up.
+clear mc;
+clear app;
+clear recorder;
+Lib.unloadlib;
+clear Lib;
+clear;
 
 
 

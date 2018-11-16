@@ -42,6 +42,5 @@ function OrderCode = disp_module_info(device_name)
     disp(['OrderCode = ', OrderCode]);
     disp(['ItemNumber = ', xep.get_system_info(XTID_SSIC_ITEMNUMBER)]);
     disp(['SerialNumber = ', xep.get_system_info(XTID_SSIC_SERIALNUMBER)]);
-    clear;
     %LIB.unloadlib(); 
 end 

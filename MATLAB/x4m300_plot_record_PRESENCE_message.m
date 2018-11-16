@@ -17,7 +17,7 @@
 %add paths
 add_ModuleConnector_path();
 % if running on a 32-bit Windows system, instead run:
-% addModuleConnectorPath('win32');
+% add_ModuleConnector_path('win32');
 
 clc
 clear
@@ -38,7 +38,7 @@ pres_signal_message = hex2dec('723bfa1e'); %presence signal message
 %% Configure X4M300
 disp_module_info(device_name);
 % Load the library
-ModuleConnector.Library;
+Lib = ModuleConnector.Library;
 % Moduleconnector object and X4M300 interface
 mc = ModuleConnector.ModuleConnector(device_name,0);
 X4M300 = mc.get_x4m300;
@@ -187,4 +187,9 @@ end
 X4M300.set_sensor_mode('stop');
 
 % Clean up.
+clear mc;
+clear X4M300;
+clear recorder;
+Lib.unloadlib;
+clear Lib;
 clear;

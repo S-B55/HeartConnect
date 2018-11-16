@@ -1,7 +1,3 @@
-% This example demonstrates the use of ModuleConnector.DataPlayer and
-% ModuleConnector.DataRecorder to playback or record raw rf data from file or sensor.
-% Simply choose your source of data and assign it to the variable input. 
-
 % Latest examples is located at https://github.com/xethru/XeThru-ModuleConnector-Examples.
 % 
 % Target module:
@@ -24,7 +20,7 @@
 % add paths
 add_ModuleConnector_path();
 % if running on a 32-bit Windows system, instead run:
-% addModuleConnectorPath('win32');
+% add_ModuleConnector_path('win32');
 
 clc
 clear
@@ -34,7 +30,7 @@ clear
  input = 'com13';
 % Specify data type for playback/recording.
 data_type = ModuleConnector.DataRecorderInterface.DataType_FloatDataType;
-downconversion = 1; %0: RF data output. 1: baseband IQ data ouput
+downconversion = 1; %0: RF data output. 1: baseband IQ data ouput. For data play back, you need you konw which kind data it is and configure correctly here.
 
 % 1. When input is recording data
 % Playback speed
@@ -52,11 +48,12 @@ dac_max = 1100;
 iterations = 16;
 pulses_per_step = 300;
 frame_area_offset = 0.18;
-frame_area_start = 0.4;
+frame_area_start = 0;
 frame_area_stop = 2;
 fps = 17;
 
 %% Configure player or module
+
 % Load the library
 Lib = ModuleConnector.Library;
 
@@ -75,6 +72,7 @@ if contains(input, 'xethru_recording_meta.dat')
     % Enable loop 
     player.set_loop_mode_enabled(1);
 else 
+    disp_module_info(input);
     %% Recorder and Module Configurations 
     playback=0;
     mc = ModuleConnector.ModuleConnector(input,0);
@@ -152,8 +150,12 @@ range_vector = [];
  while ishandle(fh)
    [int, len, frame_count, data]= xep.read_message_data_float;   
    if downconversion == 1
-      len = len/2 ;
-      data = abs((complex(data(1:len),data(len+1:len*2))));
+      % Generate IQ vector.
+      len = len/2;
+      i_vec = data(1:len);
+      q_vec = data(len+1:len*2);
+      iq_vec = i_vec + 1i*q_vec;
+      data = abs(iq_vec);
    end   
    if isempty(range_vector)
    % First time, generate range vector.
@@ -178,8 +180,10 @@ end
 
 
 % Clean up.
- clear app;
- clear mc;
- clear xep;
- clear recorder;
- clear Lib;
+clear xep;
+clear app;
+clear mc;
+clear recorder;
+Lib.unloadlib;
+clear Lib;
+clear;

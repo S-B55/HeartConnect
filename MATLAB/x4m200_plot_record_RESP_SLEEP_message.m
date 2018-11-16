@@ -25,7 +25,7 @@ clear
 % Select comport 
 device_name = 'COM13';
 % Enable/disable recording
-rec = 1; 
+rec = 0; 
 % sensor configurations:
 profile = hex2dec('064e57ad'); %Respiration profile
 detection_zone_start = 0.4;
@@ -196,4 +196,9 @@ end
 X4M200.set_sensor_mode('stop');
 
 % Clean up.
+clear mc;
+clear X4M200;
+clear recorder;
+Lib.unloadlib;
+clear Lib;
 clear;
