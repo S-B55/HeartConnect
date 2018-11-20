@@ -55,7 +55,7 @@ x4m200_par_settings = {'detection_zone': (0.4, 2),
                        'tx_center_frequency': 3,
                        'led_control': (XTID_LED_MODE_OFF, 0),
                        # initialize noisemap everytime when get start (approximately 120s)
-                       'noisemap_control': 0b111,
+                       'noisemap_control': 0b110,
                        # only uncomment the message when you need them to avoide confliction.
                        #    'output_control1': (XTS_ID_BASEBAND_IQ, 0),
                        #    'output_control2': (XTS_ID_BASEBAND_AMPLITUDE_PHASE, 0),
