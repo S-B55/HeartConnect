@@ -126,8 +126,8 @@ def print_x4m300_messages(x4m300):
     try:
         while True:
             rdata = x4m300.read_message_presence_single()  # update every 1 second
-            print("message_presence_single: frame_counter: {} presence_state: {} respiration_rate: {} distance: {} signal_quality: {}".format(
-                rdata.frame_counter, presence_sensor_state_text[rdata.presence_state], rdata.distance, rdata.direction, rdata.signal_quality))
+            print("message_presence_single: frame_counter: {} presence_state: {} distance: {} signal_quality: {}".format(
+                rdata.frame_counter, presence_sensor_state_text[rdata.presence_state], rdata.distance, rdata.signal_quality))
             # rdata = x4m300.read_message_presence_movinglist() # update every 1 second
             #print("message_presence_movinglist:\ncounter: {} \nmovement_slow_items: {} \nmovement_fast_items: {}\n".format(rdata.counter, np.array(rdata.movement_slow_items), np.array(rdata.movement_fast_items)))
     except:
