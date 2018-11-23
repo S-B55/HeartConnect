@@ -16,19 +16,49 @@
 
 function disp_x4_settings(xep)
     % Check values (to confirm we have the values we want);:
-    disp("");
-    disp("********** Current X4 settings **********");
-    disp("");
-    disp(['iterations: ' , num2str(xep.x4driver_get_iterations())]);
-    disp(['pulses_per_step: ' , num2str(xep.x4driver_get_pulsesperstep())]);
-    disp(['dac_min: ' , num2str(xep.x4driver_get_dac_min())]);
-    disp(['dac_max: ' , num2str(xep.x4driver_get_dac_max())]);
-    disp(['prf_div: ' , num2str(xep.x4driver_get_prf_div())]);
-    disp(['tx_power: ' , num2str(xep.x4driver_get_tx_power())]);
-    disp(['tx_center_frequency: ' , num2str(xep.x4driver_get_tx_center_frequency())]);
-    disp(['downconversion: ' , num2str(xep.x4driver_get_downconversion())]);
-    disp(['Frame area offset: ' , num2str(xep.x4driver_get_frame_area_offset())]);
-    [frame_start, frame_stop] = xep.x4driver_get_frame_area();
-    disp(['Frame Area: ' , num2str(frame_start) , ' to ' , num2str(frame_stop)]);
-    clear
+[downconversion, status] = xep.x4driver_get_downconversion;
+[frequency, status] = xep.x4driver_get_tx_center_frequency;
+[prf_div,status] = xep.x4driver_get_prf_div;
+[x4_iterations,status] = xep.x4driver_get_iterations;
+[x4_pps,status] = xep.x4driver_get_pulsesperstep;
+[dac_min, status_min] = xep.x4driver_get_dac_min;
+[dac_max, status_max] = xep.x4driver_get_dac_max;
+% framearea
+[frame_area_offset, status] = xep.x4driver_get_frame_area_offset;
+[framebincount, status] = xep.x4driver_get_framebincount;
+[start, stop, status] = xep.x4driver_get_frame_area;
+
+% disp status
+if downconversion==0
+    downstr='disabled'
+else
+    downstr = 'enabled';
+end
+if frequency==3
+    freqstr = '6.0 to 8.5 Ghz range, centre=7.29GHz';
+else
+    freqstr = '7.2 to 10.2 GHz range, centre=8.4GHz';
+end
+%Prf
+prf_base_freq = 243e6;
+prf_freq = prf_base_freq / single(prf_div);
+c= 3e8;
+Ramb = c/(2*prf_freq);
+frameInterval_ideal = 1/prf_freq * x4_iterations * x4_pps * (dac_max-dac_min+1);
+disp("");
+disp("********** Current X4 chip settings **********");
+disp(['Downconversion = ' downstr]);
+disp(['Frequency = ' freqstr]);
+disp(['Prf-div = ' num2str(prf_div) ' --> PRF_Freq= ' num2str(prf_freq/1e6,5) ...
+    ' MHz giving ambigous range Ramb = ' num2str(Ramb) ' m']); 
+disp(['Iterations = ' num2str(x4_iterations)]);
+disp(['PulsesPerStep = ' num2str(x4_pps)]);
+disp(['DacMin = ' num2str(dac_min)]);
+disp(['DacMax = ' num2str(dac_max)]);
+disp(['FrameInterval_ideal= ' num2str(frameInterval_ideal*1000) ...
+    ' ms -> giving max theoretical fps_max=' num2str(1/frameInterval_ideal)]);
+disp(['frameAreaOffset = ' num2str(frame_area_offset)]);
+disp(['frameAreaStart = ' num2str(start)]);
+disp(['frameAreaStop = ' num2str(stop)]);
+disp(['frameBinCount = ' num2str(framebincount)]);
 end
