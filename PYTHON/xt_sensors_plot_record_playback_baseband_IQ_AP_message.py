@@ -163,7 +163,7 @@ def plot_sensor_bb_message(xt_sensor, data_type="iq"):
         amp_data, pha_data = read_bb_ap_data()
         line1, = ax1.plot(amp_data)
         line2, = ax2.plot(pha_data)
-        ani = FuncAnimation(fig, animate_bb_ap)
+        ani = FuncAnimation(fig, animate_bb_ap, interval=1)
     plt.show()
     sys.exit(0)
 

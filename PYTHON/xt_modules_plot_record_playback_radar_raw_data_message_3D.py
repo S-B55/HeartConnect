@@ -3,13 +3,13 @@
 
 Latest examples is located at https://github.com/xethru/XeThru-ModuleConnector-Examples.
 
-#Target module: 
-#X4M200
-#X4M300
-#X4M03(XEP)
+# Target module:
+# X4M200
+# X4M300
+# X4M03(XEP)
 
-#Introduction: XeThru modules support both RF and baseband data output. This is an example of radar raw data manipulation. 
-               Developer can use Module Connecter API to read, record radar raw data, and also playback recorded data. 
+# Introduction: XeThru modules support both RF and baseband data output. This is an example of radar raw data manipulation.
+               Developer can use Module Connecter API to read, record radar raw data, and also playback recorded data.
 
 # prerequisite:
 # ModuleConnector python lib is installed, check XeThruSensorsIntroduction application note to get detail
@@ -17,10 +17,10 @@ Latest examples is located at https://github.com/xethru/XeThru-ModuleConnector-E
 # xt_modules_record_playback_messages.py should be in the same folder
 
 
-# Command to run: 
+# Command to run:
 # 1. Use "python xt_modules_plot_record_playback_radar_raw_data_message_3D.py" to plot radar raw data. If device is not be automatically recognized,add argument "-d com8" to specify device. change "com8" with your device name, using "--help" to see other args. Using TCP server address as device name is also supported by specify TCP address like "-d tcp://192.168.1.169:3000".
 # 2. add "-r" to enable recording.
-# 3. use  "python xt_modules_plot_record_playback_radar_raw_data_message_3D.py -f xethru_recording_xxxx/xethru_recording_meta.dat" to play back recording file. Add "-b" if the recording is baseband data. 
+# 3. use  "python xt_modules_plot_record_playback_radar_raw_data_message_3D.py -f xethru_recording_xxxx/xethru_recording_meta.dat" to play back recording file. Add "-b" if the recording is baseband data.
 """
 from __future__ import print_function, division
 import sys
@@ -96,16 +96,16 @@ def configure_x4(device_name, record=False, baseband=True, x4_settings=x4_par_se
             setter(value)
 
         print("Setting %s to %s" % (variable, value))
-    print_x4_settings(xep)
+    # print_x4_settings(xep)
     return xep
 
 
 def plot_radar_raw_data_message(xep, baseband=True, frames_number=1):
     def read_frame():
         """Gets frame data from module"""
-        d = xep.read_message_data_float()
+        d = xep.read_message_data_float()  # wait until get data
         frame = np.array(d.data)
-        #print('frame length:' + str(len(frame)))
+        # print('frame length:' + str(len(frame)))
         # Convert the resulting frame to a complex array if downconversion is enabled
         if baseband:
             n = len(frame)
@@ -150,8 +150,8 @@ def plot_radar_raw_data_message(xep, baseband=True, frames_number=1):
     colors[0] = 'r'
     lines = [ax.plot(x, Y[i], frames[i], '-', color=colors[i])[0]
              for i in range(frames_number)]
-    anim = FuncAnimation(fig, update_lines, interval=1 /
-                         (2*fps)*1e3, init_func=init, blit=True)
+    anim = FuncAnimation(fig, update_lines, interval=1,
+                         init_func=init, blit=True)
     plt.show()
 
 

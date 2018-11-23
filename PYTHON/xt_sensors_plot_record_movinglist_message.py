@@ -183,7 +183,7 @@ def plot_record_movinglist_messages(device_name, record=False):
     line1, = ax1.plot(mfast)
     line2, = ax2.plot(mslow)
     line3, = ax3.plot(dist)
-    ani = FuncAnimation(fig, animate, interval=100)
+    ani = FuncAnimation(fig, animate, interval=1)
     try:
         plt.show()
     finally:

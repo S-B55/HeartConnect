@@ -95,14 +95,14 @@ def configure_x4(device_name, record=False, baseband=False, x4_settings=x4_par_s
             setter(value)
 
         print("Setting %s to %s" % (variable, value))
-    print_x4_settings(xep)
+    # print_x4_settings(xep)
     return xep
 
 
 def plot_radar_raw_data_message(xep, baseband=False):
     def read_frame():
         """Gets frame data from module"""
-        d = xep.read_message_data_float()
+        d = xep.read_message_data_float()  # wait until get data
         frame = np.array(d.data)
         #print('frame length:' + str(len(frame)))
         # Convert the resulting frame to a complex array if downconversion is enabled
@@ -128,7 +128,7 @@ def plot_radar_raw_data_message(xep, baseband=False):
         frame = abs(frame)
     line, = ax.plot(frame)
 
-    ani = FuncAnimation(fig, animate, interval=0)
+    ani = FuncAnimation(fig, animate, interval=1)
     try:
         plt.show()
     except:
