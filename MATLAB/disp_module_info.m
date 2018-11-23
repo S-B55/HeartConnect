@@ -21,7 +21,8 @@ function OrderCode = disp_module_info(device_name)
     %ModuleConnector.Library;
     % Stop running application and set module in manual mode.
     mc = ModuleConnector.ModuleConnector(device_name,0);
-    app = mc.get_x4m200();
+    % Assume an X4M300/X4M200 module and try to enter XEP mode
+    app = mc.get_x4m200(); 
     % we have to go to manual mode
     app.set_sensor_mode('stop');
     app.set_sensor_mode('xep');
