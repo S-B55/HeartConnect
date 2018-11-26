@@ -48,19 +48,19 @@ def print_module_info(device_name):
     print("")
     print("********** XeThru Module Information **********")
     print("")
-    print('Received pong= ', hex(pong) + ' connection build!')
-    print('FirmWareID = ', xep.get_system_info(XTID_SSIC_FIRMWAREID))
-    print('Version = ', xep.get_system_info(XTID_SSIC_VERSION))
-    print('Build = ', xep.get_system_info(XTID_SSIC_BUILD))
-    print('VersionList = ', xep.get_system_info(XTID_SSIC_VERSIONLIST))
+    print("Received pong= ", hex(pong) + "connection build!")
+    print("FirmWareID = ", xep.get_system_info(XTID_SSIC_FIRMWAREID))
+    print("Version = ", xep.get_system_info(XTID_SSIC_VERSION))
+    print("Build = ", xep.get_system_info(XTID_SSIC_BUILD))
+    print("VersionList = ", xep.get_system_info(XTID_SSIC_VERSIONLIST))
 
     # Following three item only supported by XeThru Sensor, e.g.X4M200, X4M300. X4M03 does not these information and will feedback error message when read.
     try:
         OrderCode = "X4Mxx"
         OrderCode = xep.get_system_info(XTID_SSIC_ORDERCODE)
-        print('OrderCode = ', OrderCode)
-        print('ItemNumber = ', xep.get_system_info(XTID_SSIC_ITEMNUMBER))
-        print('SerialNumber = ', xep.get_system_info(XTID_SSIC_SERIALNUMBER))
+        print("OrderCode = ", OrderCode)
+        print("ItemNumber = ", xep.get_system_info(XTID_SSIC_ITEMNUMBER))
+        print("SerialNumber = ", xep.get_system_info(XTID_SSIC_SERIALNUMBER))
     except:
         # This is not a sensor but a development kit running XEP.
         pass
@@ -91,17 +91,32 @@ def print_x4_settings(xep):
     print("")
     print("********** Current X4 settings **********")
     print("")
+    print("downconversion: " + str(xep.x4driver_get_downconversion()))
+
+    frequency = xep.x4driver_get_tx_center_frequency()
+    if frequency == 3:
+        freqstr = "6.0 to 8.5 Ghz range, centre=7.29GHz"
+    else:
+        freqstr = "7.2 to 10.2 GHz range, centre=8.4GHz"
+    print("tx_center_frequency: " + freqstr)
+
+    prf_div = xep.x4driver_get_prf_div()
+    prf_base_freq = 243e6
+    prf_freq = prf_base_freq/prf_div
+    c = 3e8
+    Ramb = c/(2*prf_freq)
+    print("Prf-div = " + str(prf_div) + "--> PRF_Freq= " + str(prf_freq /
+                                                               1e6) + "MHz giving ambigous range Ramb = " + str(Ramb) + "m")
     print("iterations: " + str(xep.x4driver_get_iterations()))
     print("pulses_per_step: " + str(xep.x4driver_get_pulses_per_step()))
     print("dac_min: " + str(xep.x4driver_get_dac_min()))
     print("dac_max: " + str(xep.x4driver_get_dac_max()))
-    print("prf_div: " + str(xep.x4driver_get_prf_div()))
+    #print("prf_div: " + str(xep.x4driver_get_prf_div()))
     print("tx_power: " + str(xep.x4driver_get_tx_power()))
-    print("tx_center_frequency: " + str(xep.x4driver_get_tx_center_frequency()))
-    print("downconversion: " + str(xep.x4driver_get_downconversion()))
     print("Frame area offset: " + str(xep.x4driver_get_frame_area_offset()))
     frame_area = xep.x4driver_get_frame_area()
     print("Frame Area: " + str(frame_area.start) + " to " + str(frame_area.end))
+    print("frameBinCount = " + str(xep.x4driver_get_frame_bin_count()))
     print("fps: " + str(xep.x4driver_get_fps()))
 
 
@@ -125,15 +140,16 @@ def main():
             raise
 
     print_module_info(device_name)
-    """ 
+    """
     # print_sensor_settings for xethru sensor  xethru_sensor
     configuration for sensor setting output
     mc = ModuleConnector(device_name)
     mc.get_xep()
     x4m200 = mc.get_x4m200()
     x4m200.set_sensor_mode(XTS_SM_STOP, 0)
-    x4m200.load_profile(XTS_ID_APP_RESPIRATION_2) # need to be change according to sensors
-    print_sensor_settings(x4m200) 
+    # need to be change according to sensors
+    x4m200.load_profile(XTS_ID_APP_RESPIRATION_2)
+    print_sensor_settings(x4m200)
     """
 
 
