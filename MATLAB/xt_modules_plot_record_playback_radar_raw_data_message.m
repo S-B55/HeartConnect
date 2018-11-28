@@ -49,7 +49,7 @@ iterations = 16;
 pulses_per_step = 300;
 frame_area_offset = 0.18;
 frame_area_start = 0;
-frame_area_stop = 2;
+frame_area_stop = 5;
 fps = 17;
 
 %% Configure player or module
@@ -109,12 +109,12 @@ if playback
     % Start playback
     player.play();
 else 
-    disp_x4_settings(xep);
     while xep.peek_message_data_float > 0
     xep.read_message_data_float();
     end
 
     xep.x4driver_set_downconversion(downconversion);
+    xep.x4driver_set_tx_center_frequency (3);
     xep.x4driver_set_iterations(iterations);
     xep.x4driver_set_pulsesperstep(pulses_per_step);
     xep.x4driver_set_dac_min(dac_min);
@@ -125,8 +125,7 @@ else
     xep.x4driver_set_frame_area(frame_area_start, frame_area_stop);
     % Start streaming data
     xep.x4driver_set_fps(fps);
-    % Start recording
-%     recorder.start_recording(data_type, dir);
+    disp_x4_settings(xep);
 end 
 
 %% Visualize data
@@ -180,10 +179,4 @@ end
 
 
 % Clean up.
-clear xep;
-clear app;
-clear mc;
-clear recorder;
-Lib.unloadlib;
-clear Lib;
 clear;
