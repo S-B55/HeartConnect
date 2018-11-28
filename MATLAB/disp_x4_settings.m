@@ -18,7 +18,7 @@ function disp_x4_settings(xep)
     % Check values (to confirm we have the values we want);:
 [downconversion, status] = xep.x4driver_get_downconversion;
 [frequency, status] = xep.x4driver_get_tx_center_frequency;
-[txpower, status] = xep.x4driver_get_tx_power();
+[txpower, status] = xep.x4driver_get_tx_power;
 [prf_div,status] = xep.x4driver_get_prf_div;
 [x4_iterations,status] = xep.x4driver_get_iterations;
 [x4_pps,status] = xep.x4driver_get_pulsesperstep;
