@@ -201,9 +201,4 @@ end
 
 
 % Clean up.
-clear app;
-clear mc;
-clear recorder;
-Lib.unloadlib;
-clear Lib;
 clear;

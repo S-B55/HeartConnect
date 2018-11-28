@@ -48,7 +48,4 @@ else
 end
 
 % Clean up.
-clear xep;
-clear mc;
-Lib.unloadlib;
-clear Lib;
+clear;

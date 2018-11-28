@@ -187,9 +187,4 @@ end
 X4M300.set_sensor_mode('stop');
 
 % Clean up.
-clear mc;
-clear X4M300;
-clear recorder;
-Lib.unloadlib;
-clear Lib;
 clear;

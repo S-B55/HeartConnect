@@ -147,9 +147,4 @@ app.set_sensor_mode('stop');
 % Clean up.
 
 % Clean up.
-clear mc;
-clear app;
-clear recorder;
-Lib.unloadlib;
-clear Lib;
 clear;

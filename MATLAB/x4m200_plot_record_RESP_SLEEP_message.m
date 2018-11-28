@@ -38,7 +38,7 @@ sleep_status_message = hex2dec('2375a16c'); %sleep output
 %% Configure X4M200
 disp_module_info(device_name);
 % Load the library
-ModuleConnector.Library;
+Lib = ModuleConnector.Library;
 % Moduleconnector object and X4M200 interface
 mc = ModuleConnector.ModuleConnector(device_name,0);
 X4M200 = mc.get_x4m200;
@@ -196,9 +196,4 @@ end
 X4M200.set_sensor_mode('stop');
 
 % Clean up.
-clear mc;
-clear X4M200;
-clear recorder;
-Lib.unloadlib;
-clear Lib;
 clear;
