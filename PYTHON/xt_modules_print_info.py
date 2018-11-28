@@ -100,6 +100,17 @@ def print_x4_settings(xep):
         freqstr = "7.2 to 10.2 GHz range, centre=8.4GHz"
     print("tx_center_frequency: " + freqstr)
 
+    txpower = xep.x4driver_get_tx_power()
+    if txpower == 0:
+        txpowerstr = "OFF"
+    elif txpower == 1:
+        txpowerstr = "Low"
+    elif txpower == 2:
+        txpowerstr = "Medium"
+    elif txpower == 3:
+        txpowerstr = "High"
+    print("tx_power: " + txpowerstr)
+
     prf_div = xep.x4driver_get_prf_div()
     prf_base_freq = 243e6
     prf_freq = prf_base_freq/prf_div

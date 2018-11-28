@@ -46,6 +46,8 @@ x4_par_settings = {'downconversion': 0,  # 0: output rf data; 1: output baseband
                    'dac_min': 949,
                    'dac_max': 1100,
                    'iterations': 16,
+                   'tx_center_frequency': 3,
+                   'tx_power': 1,
                    'pulses_per_step': 300,
                    'frame_area_offset': 0.18,
                    'frame_area': (-0.5, 2),
@@ -95,7 +97,7 @@ def configure_x4(device_name, record=False, baseband=False, x4_settings=x4_par_s
             setter(value)
 
         print("Setting %s to %s" % (variable, value))
-    # print_x4_settings(xep)
+    print_x4_settings(xep)
     return xep
 
 
