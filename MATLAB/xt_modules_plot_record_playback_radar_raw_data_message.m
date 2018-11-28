@@ -115,6 +115,7 @@ else
 
     xep.x4driver_set_downconversion(downconversion);
     xep.x4driver_set_tx_center_frequency (3);
+    xep.x4driver_set_tx_power(1); 
     xep.x4driver_set_iterations(iterations);
     xep.x4driver_set_pulsesperstep(pulses_per_step);
     xep.x4driver_set_dac_min(dac_min);
