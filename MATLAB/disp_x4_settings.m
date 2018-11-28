@@ -18,6 +18,7 @@ function disp_x4_settings(xep)
     % Check values (to confirm we have the values we want);:
 [downconversion, status] = xep.x4driver_get_downconversion;
 [frequency, status] = xep.x4driver_get_tx_center_frequency;
+[txpower, status] = xep.x4driver_get_tx_power();
 [prf_div,status] = xep.x4driver_get_prf_div;
 [x4_iterations,status] = xep.x4driver_get_iterations;
 [x4_pps,status] = xep.x4driver_get_pulsesperstep;
@@ -30,15 +31,29 @@ function disp_x4_settings(xep)
 
 % disp status
 if downconversion==0
-    downstr='disabled'
+    downstr= 'disabled';
 else
     downstr = 'enabled';
 end
+
 if frequency==3
     freqstr = '6.0 to 8.5 Ghz range, centre=7.29GHz';
 else
     freqstr = '7.2 to 10.2 GHz range, centre=8.4GHz';
 end
+
+
+if txpower == 0
+    txpowerstr = 'OFF';
+elseif txpower == 1
+    txpowerstr = 'Low';
+elseif  txpower == 2
+    txpowerstr = 'Medium';
+elseif  txpower == 3
+    txpowerstr = 'High';
+end
+
+
 %Prf
 prf_base_freq = 243e6;
 prf_freq = prf_base_freq / single(prf_div);
@@ -49,6 +64,7 @@ disp("");
 disp("********** Current X4 chip settings **********");
 disp(['Downconversion = ' downstr]);
 disp(['Frequency = ' freqstr]);
+disp(['Tx_power = ' txpowerstr]);
 disp(['Prf-div = ' num2str(prf_div) ' --> PRF_Freq= ' num2str(prf_freq/1e6,5) ...
     ' MHz giving ambigous range Ramb = ' num2str(Ramb) ' m']); 
 disp(['Iterations = ' num2str(x4_iterations)]);
