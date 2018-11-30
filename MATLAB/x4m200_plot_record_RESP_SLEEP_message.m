@@ -108,7 +108,8 @@ set(gca,'XTickLabel',[])
 
 % Configuring subplots for Movement vectors
 subplot(5,1,4);
-r_mvs = plot(NaN,NaN);
+%r_mvs = plot(NaN,NaN,'ob');
+r_mvs = bar(NaN,NaN,'b');
 th_mvs = title('');
 grid on;
 xlim([detection_zone_start, detection_zone_end]);
@@ -117,7 +118,8 @@ xlabel('detection zone');
 ylabel('Movement slow');
 
 subplot(5,1,5);
-r_mvf = plot(NaN,NaN);
+%r_mvf = plot(NaN,NaN,'og');
+r_mvf = bar(NaN,NaN,'b');
 th_mvf = title('');
 grid on;
 xlim([detection_zone_start, detection_zone_end]);
