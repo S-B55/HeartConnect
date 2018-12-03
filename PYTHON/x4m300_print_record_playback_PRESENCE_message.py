@@ -55,7 +55,7 @@ x4m300_par_settings = {'detection_zone': (0.4, 2),
                        #    'output_control5': (XTS_ID_NOISEMAP_FLOAT, 0),
                        #    'output_control6': (XTS_ID_NOISEMAP_BYTE, 0),
                        'output_control7': (XTS_ID_PRESENCE_SINGLE, 1),
-                       #    'output_control8': (XTS_ID_PRESENCE_MOVINGLIST, 0)
+                       'output_control8': (XTS_ID_PRESENCE_MOVINGLIST, 1)
                        }
 
 
@@ -125,11 +125,12 @@ def configure_x4m300(device_name, record=False, x4m300_settings=x4m300_par_setti
 def print_x4m300_messages(x4m300):
     try:
         while True:
-            rdata = x4m300.read_message_presence_single()  # update every 1 second
-            print("message_presence_single: frame_counter: {} presence_state: {} distance: {} signal_quality: {}".format(
-                rdata.frame_counter, presence_sensor_state_text[rdata.presence_state], rdata.distance, rdata.signal_quality))
-            # rdata = x4m300.read_message_presence_movinglist() # update every 1 second
-            #print("message_presence_movinglist:\ncounter: {} \nmovement_slow_items: {} \nmovement_fast_items: {}\n".format(rdata.counter, np.array(rdata.movement_slow_items), np.array(rdata.movement_fast_items)))
+            while x4m300.peek_message_presence_single():
+                rdata = x4m300.read_message_presence_single()
+                print("message_presence_single: frame_counter: {} presence_state: {} distance: {} signal_quality: {}".format(rdata.frame_counter, presence_sensor_state_text[rdata.presence_state], rdata.distance, rdata.signal_quality))
+            while x4m300.peek_message_presence_movinglist(): # update every 1 second
+                rdata = x4m300.read_message_presence_movinglist()
+                print("message_presence_movinglist:\ncounter: {} \nmovement_slow_items: {} \nmovement_fast_items: {}\n".format(rdata.frame_counter, np.array(rdata.movement_slow_items), np.array(rdata.movement_fast_items)))
     except:
         print('Messages output finish!')
     sys.exit(0)

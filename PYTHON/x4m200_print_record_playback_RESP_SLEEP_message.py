@@ -64,9 +64,9 @@ x4m200_par_settings = {'detection_zone': (0.4, 2),
                        #    'output_control5': (XTS_ID_NOISEMAP_FLOAT, 0),
                        #    'output_control6': (XTS_ID_NOISEMAP_BYTE, 0),
                        'output_control7': (XTS_ID_SLEEP_STATUS, 1),
-                       #    'output_control8': (XTS_ID_RESP_STATUS, 0),
-                       #    'output_control9': (XTS_ID_VITAL_SIGNS, 0),
-                       #    'output_control10': (XTS_ID_RESPIRATION_MOVINGLIST, 0),
+                       #     'output_control8': (XTS_ID_RESP_STATUS, 1),
+                       #    'output_control9': (XTS_ID_VITAL_SIGNS, 0),   
+                       'output_control10': (XTS_ID_RESPIRATION_MOVINGLIST, 1),
                        #    'output_control11': (XTS_ID_RESPIRATION_DETECTIONLIST, 0)
                        }
 
@@ -147,16 +147,19 @@ def configure_x4m200(device_name, record=False, x4m200_settings=x4m200_par_setti
 def print_x4m200_messages(x4m200):
     try:
         while True:
-            # rdata = x4m200.read_message_respiration_legacy() # update every 1/17 second
-            # #print("message_respiration_legacy:\n frame_counter: {} sensor_state: {} respiration_rate: {} distance: {} Breath Pattern: {} signal_quality: {}\n" .format(rdata.frame_counter, rdata.sensor_state, rdata.respiration_rate, rdata.distance, rdata.movement, rdata.signal_quality))
-            rdata = x4m200.read_message_respiration_sleep()  # update every 1 second
-            print("message_respiration_sleep: frame_counter: {} sensor_state: {} respiration_rate: {} distance: {} movement_slow: {} movement_fast: {}".format(
-                rdata.frame_counter, respiration_sensor_state_text[rdata.sensor_state], rdata.respiration_rate, rdata.distance, rdata.movement_slow, rdata.movement_fast))
-            # rdata = x4m200.read_message_vital_signs()  # update every 1 second
-            # print("message_vital_signs: frame_counter: {} sensor_state: {} respiration_rate: {} respiration_distance: {} respiration_confidence: {} heart_rate: {} heart_distance: {} heart_confidence: {}".format(
-            #     rdata.frame_counter, respiration_state_text[rdata.sensor_state], rdata.respiration_rate, rdata.respiration_distance, rdata.respiration_confidence, rdata.heart_rate, rdata.heart_distance, rdata.heart_confidence))
-            # rdata = x4m200.read_message_respiration_movinglist() # update every 1 second
-            # print("message_respiration_movinglist:\ncounter: {} \nmovement_slow_items: {} \nmovement_fast_items: {}\n".format(rdata.counter, np.array(rdata.movement_slow_items), np.array(rdata.movement_fast_items)))
+            # while x4m200.peek_message_respiration_legacy(): # update every 1/17 second
+            #     rdata = x4m200.read_message_respiration_legacy() 
+            #     print("message_respiration_legacy:\n frame_counter: {} sensor_state: {} respiration_rate: {} distance: {} Breath Pattern: {} signal_quality: {}\n" .format(rdata.frame_counter, rdata.sensor_state, rdata.respiration_rate, rdata.distance, rdata.movement, rdata.signal_quality))
+            while x4m200.peek_message_respiration_sleep(): # update every 1 second
+                rdata = x4m200.read_message_respiration_sleep()  
+                print("message_respiration_sleep: frame_counter: {} sensor_state: {} respiration_rate: {} distance: {} movement_slow: {} movement_fast: {}".format(rdata.frame_counter, respiration_sensor_state_text[rdata.sensor_state], rdata.respiration_rate, rdata.distance, rdata.movement_slow, rdata.movement_fast))
+            # while x4m200.peek_message_vital_signs():  # update every 1 second
+            #     rdata = x4m200.read_message_vital_signs() 
+            #      print("message_vital_signs: frame_counter: {} sensor_state: {} respiration_rate: {} respiration_distance: {} respiration_confidence: {} heart_rate: {} heart_distance: {} heart_confidence: {}".format(
+            #      rdata.frame_counter, respiration_state_text[rdata.sensor_state], rdata.respiration_rate, rdata.respiration_distance, rdata.respiration_confidence, rdata.heart_rate, rdata.heart_distance, rdata.heart_confidence))
+            while x4m200.peek_message_respiration_movinglist(): # update every 1 second
+                rdata = x4m200.read_message_respiration_movinglist() # update every 1 second
+                print("message_respiration_movinglist:\ncounter: {} \nmovement_slow_items: {} \nmovement_fast_items: {}\n".format(rdata.counter, np.array(rdata.movement_slow_items), np.array(rdata.movement_fast_items)))
     except:
         print('Messages output finish!')
     sys.exit(0)
