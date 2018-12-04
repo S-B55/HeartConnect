@@ -68,4 +68,5 @@ https://www.xethru.com/community/resources/module-connector-raspberry-pi.81/
 * [xt_modules_access_registers.py](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/PYTHON/xt_modules_access_registers.py)
 * [xep_distance_demo_host.py](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/PYTHON/xep_distance_demo_host.py)
 * [xep_sample_direct_path.py](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/PYTHON/xep_sample_direct_path.py)
+* [xt_modules_set_certification_mode.py](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/PYTHON/xt_modules_set_certification_mode.py)
 
