@@ -72,3 +72,8 @@ https://www.xethru.com/community/resources/xethru-sensors-introduction.111/
 * [xep_distance_demo_host.py](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/PYTHON/xep_distance_demo_host.py)
 * [xep_sample_direct_path.py](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/PYTHON/xep_sample_direct_path.py)
 * [xt_modules_set_certification_mode.py](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/PYTHON/xt_modules_set_certification_mode.py)
+
+ToDo:
+1. update get message methods, use peek before read to get latest message.
+2. add XeThruSensorsIntroduction app note resource link to every examples.
+3. add cpp examples 
