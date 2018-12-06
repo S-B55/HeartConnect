@@ -9,6 +9,9 @@ https://www.xethru.com/community/resources/module-connector-unix.80/
 https://www.xethru.com/community/resources/module-connector-macos.79/
 https://www.xethru.com/community/resources/module-connector-raspberry-pi.81/
 
+There is one application note intruducing how to use Module Connector:
+https://www.xethru.com/community/resources/xethru-sensors-introduction.111/
+
 # Example Folder Structure
 
 * [/CPP]()
@@ -69,4 +72,3 @@ https://www.xethru.com/community/resources/module-connector-raspberry-pi.81/
 * [xep_distance_demo_host.py](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/PYTHON/xep_distance_demo_host.py)
 * [xep_sample_direct_path.py](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/PYTHON/xep_sample_direct_path.py)
 * [xt_modules_set_certification_mode.py](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/PYTHON/xt_modules_set_certification_mode.py)
-
