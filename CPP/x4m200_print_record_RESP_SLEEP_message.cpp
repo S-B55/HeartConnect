@@ -2,13 +2,9 @@
 
 Latest examples is located at https://github.com/xethru/XeThru-ModuleConnector-Examples.
 
-Target module: 
-#X4M200
-#X4M300
-#X4M03(XEP)
+Target module: x4m200
 
-
-Introduction: XeThru modules support both RF and baseband data output. This is an example of radar raw data manipulation. Developer can use Module Connecter API to read, record radar raw data, and also playback recorded data. 
+Introduction: This is an example of how to print out application messages from x4m200 module.
 
 prerequisite:
 
@@ -18,17 +14,15 @@ prerequisite:
 Command to run: 
 
 1. Compile the source code by using make command under source code folder in terminal.
-2. Run like xt_modules_print_record_playback_radar_raw_data_message.exe\n com1\n or 192.168.1.1 2000\n or .\xethru_recording_xxx\\xethru_recording_meta.dat for different inputs.
+2. Run like "./x4m200_print_record_RESP_SLEEP_message.exe com3" or  "./x4m200_print_record_RESP_SLEEP_message.exe 192.168.1.100 2000" 
 
 */
 
 #include "ModuleConnector.hpp"
 #include "DataRecorder.hpp"
-#include "DataPlayer.hpp"
 #include "functional"
-#include "X4M200.hpp"
+#include "x4m200.hpp"
 #include "signal.h"
-#include "XEP.hpp"
 #include "xtid.h"
 #include <iostream>
 #if defined(_WIN32) || defined(__MINGW32__)
@@ -39,7 +33,7 @@ using namespace XeThru;
 
 void usage()
 {
-    std::cout << "Example: xt_modules_print_record_playback_radar_raw_data_message.exe\n com1\n or 192.168.1.1 2000\n or .\xethru_recording_xxx\\xethru_recording_meta.dat" << std::endl;
+    std::cout << "Example: print_x4m200_messages.exe com1 or print_x4m200_messages.exe 192.168.1.1 2000" << std::endl;
 }
 
 int handle_error(std::string message)
@@ -82,14 +76,13 @@ int disp_module_info(ModuleConnector &mc)
     return 0;
 }
 
-volatile sig_atomic_t stop_output;
+volatile sig_atomic_t stop_recording;
 void handle_sigint(int num)
 {
-    stop_output = 1;
-    std::cout << "\nStop recording!"
+    stop_recording = 1;
+    std::cout << "\n Stop recording!\n"
               << std::endl;
 }
-
 //! [Callback declare]
 static void on_file_available(XeThru::DataType type, const std::string &filename)
 {
@@ -107,29 +100,25 @@ static void on_meta_file_available(const std::string &session_id, const std::str
 }
 //! [Callback meta declare]
 
-uint8_t playback = 0;
 const uint8_t enalbe_record = 1;
 
-const uint8_t downconversion = 1;
-const float dac_min = 949;
-const float dac_max = 1100;
-const uint32_t iterations = 16;
-const uint32_t pulses_per_step = 300;
-const float frame_area_offset = 0.18;
-const float frame_area_start = 0;
-const float frame_area_stop = 5;
-const float fps = 1;
+// sensor settings
+const float detection_zone_start = 0.4;
+const float detection_zone_end = 5;
+const uint32_t sensitivity = 5;
+const uint32_t noisemap_control = 6;
 
-int print_radar_raw_data_message(ModuleConnector &mc)
+int print_x4m200_messages(ModuleConnector &mc)
 {
-    XeThru::DataFloat radar_raw_data;
-
+    XeThru::SleepData respiration_sleep_message;
+    XeThru::RespirationMovingListData respiration_movinglist_message;
+    char respiration_sensor_state_text[5][20] = {"BREATHING", "MOVEMENT", "MOVEMENT TRACKING", "NO MOVEMENT", "INITIALIZING"};
+    disp_module_info(mc);
     if (enalbe_record == 1)
     {
         DataRecorder &recorder = mc.get_data_recorder();
-        const DataTypes data_types = FloatDataType | PresenceSingleDataType;
+        const DataTypes data_types = BasebandApDataType | SleepDataType;
         const std::string output_directory = ".";
-        disp_module_info(mc);
         if (recorder.start_recording(data_types, output_directory) != 0)
         {
             std::cout << "Failed to start recording" << std::endl;
@@ -141,7 +130,7 @@ int print_radar_raw_data_message(ModuleConnector &mc)
             DataRecorder::FileAvailableCallback callback = std::bind(&on_file_available,
                                                                      std::placeholders::_1,
                                                                      std::placeholders::_2);
-            recorder.subscribe_to_file_available(FloatDataType | PresenceSingleDataType, callback);
+            recorder.subscribe_to_file_available(BasebandApDataType | SleepDataType, callback);
         }
 
         {
@@ -151,100 +140,65 @@ int print_radar_raw_data_message(ModuleConnector &mc)
             recorder.subscribe_to_meta_file_available(callback);
         }
     }
-
-    X4M200 &xethru_module = mc.get_x4m200();
+    //const unsigned int log_level = 0;
+    X4M200 &x4m200 = mc.get_x4m200();
 
     // ignore status. This might fail and that is ok.
-    std::cout << "Set the module to Stop mode" << std::endl;
-    xethru_module.set_sensor_mode(XTID_SM_STOP, 0);
-    std::cout << "Set the module to Manual mode" << std::endl;
-    xethru_module.set_sensor_mode(XTID_SM_MANUAL, 0);
+    std::cout << "Stop the module" << std::endl;
+    x4m200.set_sensor_mode(XTID_SM_STOP, 0);
 
-    XEP &xep = mc.get_xep();
+    std::cout << "Load presence profile" << std::endl;
+    if (x4m200.load_profile(XTS_ID_APP_RESPIRATION_2))
+    {
+        return handle_error("load_profile failed");
+    }
 
-    xep.x4driver_set_downconversion(downconversion);
-    xep.x4driver_set_tx_center_frequency(3);
-    xep.x4driver_set_tx_power(1);
-    xep.x4driver_set_iterations(iterations);
-    xep.x4driver_set_pulses_per_step(pulses_per_step);
-    xep.x4driver_set_dac_min(dac_min);
-    xep.x4driver_set_dac_max(dac_max);
+    x4m200.set_detection_zone(detection_zone_start, detection_zone_end);
+    x4m200.set_sensitivity(sensitivity);
+    x4m200.set_noisemap_control(noisemap_control);
+    // x4m200.set_output_control(XTS_ID_BASEBAND_IQ, XTID_OUTPUT_CONTROL_ENABLE);
+    // x4m200.set_output_control(XTS_ID_BASEBAND_AMPLITUDE_PHASE, XTID_OUTPUT_CONTROL_ENABLE);
+    // x4m200.set_output_control(XTS_ID_PULSEDOPPLER_FLOAT, XTID_OUTPUT_CONTROL_ENABLE);
+    // x4m200.set_output_control(XTS_ID_PULSEDOPPLER_BYTE, XTID_OUTPUT_CONTROL_ENABLE);
+    // x4m200.set_output_control(XTS_ID_NOISEMAP_FLOAT, XTID_OUTPUT_CONTROL_ENABLE);
+    // x4m200.set_output_control(XTS_ID_NOISEMAP_BYTE, XTID_OUTPUT_CONTROL_ENABLE);
+    x4m200.set_output_control(XTS_ID_SLEEP_STATUS, XTID_OUTPUT_CONTROL_ENABLE);
+    //x4m200.set_output_control(XTS_ID_RESP_STATUS, XTID_OUTPUT_CONTROL_ENABLE);
+    // x4m200.set_output_control(XTS_ID_VITAL_SIGNS, XTID_OUTPUT_CONTROL_ENABLE);
+    //x4m200.set_output_control(XTS_ID_RESPIRATION_MOVINGLIST, XTID_OUTPUT_CONTROL_ENABLE);
+    // x4m200.set_output_control(XTS_ID_RESPIRATION_DETECTIONLIST, XTID_OUTPUT_CONTROL_ENABLE);
 
     // start the module and profile
-    std::cout << "Set the module FPS and start to output radar raw data." << std::endl;
-    if (xep.x4driver_set_fps(fps))
+
+    std::cout << "Set the module in RUN state" << std::endl;
+    if (x4m200.set_sensor_mode(XTID_SM_RUN, 0))
     {
-        return handle_error("Set FPS failed");
+        return handle_error("Set sensor mode to running failed");
     }
 
-    std::cout << "Printout radar raw message:" << std::endl;
+    std::cout << "Printout respiration sleep message:" << std::endl;
 
-    while (!stop_output)
+    while (!stop_recording)
     {
-        while (xep.peek_message_data_float() > 0)
+        while (x4m200.peek_message_respiration_sleep() > 0)
         {
-            xep.read_message_data_float(&radar_raw_data);
-            std::cout << "\nradar_raw_data_message:"
-                      << std::endl;
-            for (auto x = std::end(radar_raw_data.data); x != std::begin(radar_raw_data.data);)
-            {
-                std::cout << *--x << ' ';
-            }
+            x4m200.read_message_respiration_sleep(&respiration_sleep_message);
+            std::cout << "message_respiration_sleep: frame_counter: " << respiration_sleep_message.frame_counter << " sensor_state: " << respiration_sensor_state_text[respiration_sleep_message.sensor_state] << " respiration_rate : " << respiration_sleep_message.respiration_rate << " distance : " << respiration_sleep_message.distance << " movement_slow : " << respiration_sleep_message.movement_slow << " movement_fast : " << respiration_sleep_message.movement_fast << std::endl;
         }
+        // while (x4m200.peek_message_respiration_movinglist() > 0)
+        // {
+        //     x4m200.read_message_respiration_movinglist(&respiration_movinglist_message);
+        //     std::cout << "message_respiration_movinglist: counter: " << respiration_movinglist_message.counter << " movement_slow_items: " << respiration_movinglist_message.movement_slow_items[1] << " movement_fast_items: " << respiration_movinglist_message.movement_fast_items[1] << std::endl;
+        // }
     }
 
-    std::cout << "\n Set the module in STOP state! \n"
-              << std::endl;
-    if (xethru_module.set_sensor_mode(XTID_SM_STOP, 0))
+    std::cout << "Set the module in STOP state" << std::endl;
+    if (x4m200.set_sensor_mode(XTID_SM_STOP, 0))
     {
         return handle_error("set output controll failed");
     }
 
-    std::cout << "Messages output finish!\n"
-              << std::endl;
-    return 0;
-}
-
-int playback_radar_raw_data_message(DataPlayer &player)
-{
-    XeThru::DataFloat radar_raw_data;
-    //Filter for Float data
-    player.set_filter(FloatDataType);
-    player.set_position(0);
-    //Set playback rate
-    player.set_playback_rate(1);
-    //Enable loop
-    player.set_loop_mode_enabled(1);
-    //Start playback
-    player.play();
-
-    ModuleConnector mc(player, 0);
-    //Get application interface
-    XEP &xep = mc.get_xep();
-    //Start playback
-    player.play();
-
-    std::cout << "Printout radar raw message:" << std::endl;
-
-    while (!stop_output)
-    {
-        while (xep.peek_message_data_float() > 0)
-        {
-            xep.read_message_data_float(&radar_raw_data);
-            std::cout << "\nradar_raw_data_message:"
-                      << std::endl;
-            for (auto x = std::end(radar_raw_data.data); x != std::begin(radar_raw_data.data);)
-            {
-                std::cout << *--x << ' ';
-            }
-        }
-    }
-
-    std::cout << "\nStop player! \n"
-              << std::endl;
-    player.stop();
-    std::cout << "Messages output finish!\n"
-              << std::endl;
+    std::cout << "Messages output finish!" << std::endl;
     return 0;
 }
 
@@ -258,25 +212,12 @@ int main(int argc, char **argv)
     }
     else if (argc == 2)
     {
-        std::string const addr_str = argv[1];
-        stop_output = 0;
+        std::cout << "Building Serial/USB port connection ..." << std::endl;
+        const std::string device_name = argv[1];
+        stop_recording = 0;
         signal(SIGINT, handle_sigint);
-        if (addr_str.find("xethru_recording_meta.dat") != std::string::npos)
-        {
-            std::cout << "Found recording data!\n"
-                      << std::endl;
-            //Dataplayer configurations
-            playback = 0;
-            DataPlayer player(addr_str);
-            return playback_radar_raw_data_message(player);
-        }
-        else
-        {
-            std::cout << "Building Serial/USB port connection ..." << std::endl;
-            const std::string device_name = argv[1];
-            ModuleConnector mc(device_name, log_level);
-            return print_radar_raw_data_message(mc);
-        }
+        ModuleConnector mc(device_name, log_level);
+        return print_x4m200_messages(mc);
     }
     else if (argc == 3)
     {
@@ -288,7 +229,9 @@ int main(int argc, char **argv)
             return 1;
         };
         short int port = atoi(argv[2]);
+        stop_recording = 0;
+        signal(SIGINT, handle_sigint);
         ModuleConnector mc(htonl(a << 24 | b << 16 | c << 8 | d), htons(port), log_level);
-        return print_radar_raw_data_message(mc);
+        return print_x4m200_messages(mc);
     }
 }

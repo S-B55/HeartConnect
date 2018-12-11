@@ -14,7 +14,7 @@ https://www.xethru.com/community/resources/xethru-sensors-introduction.111/
 
 # Example Folder Structure
 
-* [/CPP]()
+* [/CPP](https://github.com/xethru/XeThru-ModuleConnector-Examples/tree/master/CPP)
 * [/MATLAB](https://github.com/xethru/XeThru-ModuleConnector-Examples/tree/master/MATLAB)
 * [/PYTHON](https://github.com/xethru/XeThru-ModuleConnector-Examples/tree/master/PYTHON)
 * [README.md](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/README.md)
@@ -25,10 +25,10 @@ https://www.xethru.com/community/resources/xethru-sensors-introduction.111/
 ## CPP examples
 
 1. Profile messages for the normal user
-<!-- * [xt_modules_print_product_info.cpp](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/MATLAB/xt_modules_print_product_info.cpp)
-* [x4m200_print_record_RESP_SLEEP_message.cpp](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/MATLAB/x4m200_print_record_RESP_SLEEP_message.cpp)
-* [x4m300_print_record_PRESENCE_message.cpp](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/MATLAB/x4m300_print_record_PRESENCE_message.cpp)
- -->
+* [xt_modules_print_record_playback_radar_raw_data_message.cpp](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/CPP/xt_modules_print_record_playback_radar_raw_data_message.cpp)
+* [x4m200_print_record_RESP_SLEEP_message.cpp](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/CPP/x4m200_print_record_RESP_SLEEP_message.cpp)
+* [x4m300_print_record_PRESENCE_message.cpp](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/CPP/x4m300_print_record_PRESENCE_message.cpp)
+
 
 ## MATLAB examples
 
