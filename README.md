@@ -14,10 +14,10 @@ https://www.xethru.com/community/resources/xethru-sensors-introduction.111/
 
 # Example Folder Structure
 
-* [/CPP](https://github.com/xethru/XeThru-ModuleConnector-Examples/tree/master/CPP)
-* [/MATLAB](https://github.com/xethru/XeThru-ModuleConnector-Examples/tree/master/MATLAB)
-* [/PYTHON](https://github.com/xethru/XeThru-ModuleConnector-Examples/tree/master/PYTHON)
-* [README.md](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/README.md)
+* [/CPP](/CPP)
+* [/MATLAB](./MATLAB)
+* [/PYTHON](/PYTHON)
+* [README.md](./README.md)
 * [LICENSE.md](https://github.com/xethru/XeThru-ModuleConnector-Examples/blob/master/LICENSE.md)
 
 # Example Content
