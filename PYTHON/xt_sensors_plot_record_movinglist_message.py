@@ -86,6 +86,10 @@ x4m300_par_settings = {'detection_zone': (0.4, 2),
                        'output_control7': (XTS_ID_PRESENCE_SINGLE, 1),
                        'output_control8': (XTS_ID_PRESENCE_MOVINGLIST, 1)
                        }
+respiration_sensor_state_text = (
+    "BREATHING", "MOVEMENT", "MOVEMENT TRACKING", "NO MOVEMENT", "INITIALIZING")
+presence_sensor_state_text = (
+    "NO_PRESENCE", "PRESENCE", "INITIALIZING")
 
 
 def plot_record_movinglist_messages(device_name, record=False):
@@ -106,12 +110,10 @@ def plot_record_movinglist_messages(device_name, record=False):
     count = 0
     if order_code == "X4M200":
         while xt_sensor.read_message_respiration_sleep().sensor_state == 4:
-            xt_sensor.read_message_respiration_movinglist()
             count = count+1
             print(str(count))
     elif order_code == "X4M300":
         while xt_sensor.read_message_presence_single().presence_state == 2:
-            xt_sensor.read_message_presence_movinglist()
             count = count + 1
             print(str(count))
     print("Initializing Done!")
@@ -119,18 +121,6 @@ def plot_record_movinglist_messages(device_name, record=False):
     print("Start plot movinglist...")
 
     def read_movelist():
-        respiration_sensor_state_text = (
-            "BREATHING", "MOVEMENT", "MOVEMENT TRACKING", "NO MOVEMENT", "INITIALIZING")
-        presence_sensor_state_text = (
-            "NO_PRESENCE", "PRESENCE", "INITIALIZING")
-
-        respiration_state_text = []
-        respiration_state_text.append("BREATHING")
-        respiration_state_text.append("MOVEMENT")
-        respiration_state_text.append("MOVEMENT TRACKING")
-        respiration_state_text.append("NO MOVEMENT")
-        respiration_state_text.append("INITIALIZING")
-
         if order_code == "X4M200":
             d2 = xt_sensor.read_message_respiration_sleep()
             # sensor state
