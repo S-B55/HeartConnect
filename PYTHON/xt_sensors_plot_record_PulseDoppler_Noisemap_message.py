@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """ \example xt_sensors_plot_record_PulseDoppler_Noisemap_message.py
 
-Latest examples is located at https://github.com/xethru/XeThru-ModuleConnector-Examples.
+Latest examples is located at https://github.com/xethru/XeThru_ModuleConnector_Examples or https://xethru@dev.azure.com/xethru/XeThruApps/_git/XeThru_ModuleConnector_Examples.
 
 # Target module:
 # X4M200
@@ -17,6 +17,7 @@ Latest examples is located at https://github.com/xethru/XeThru-ModuleConnector-E
 
 # Command to run:  "python xt_sensors_plot_record_PulseDoppler_Noisemap_message.py -d com8" or "python3 xt_sensors_plot_record_PulseDoppler_Noisemap_message.py -d com8"
                   change "com8" with your device name, using "--help" to see other args.
+                  
 """
 
 from __future__ import print_function

@@ -1,3 +1,5 @@
+% Latest examples is located at https://github.com/xethru/XeThru_ModuleConnector_Examples or https://xethru@dev.azure.com/xethru/XeThruApps/_git/XeThru_ModuleConnector_Examples.
+%
 % display X4 chip settings of XeThru modules
 % 
 % Prerequisite:

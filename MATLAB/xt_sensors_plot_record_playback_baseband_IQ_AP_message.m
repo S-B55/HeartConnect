@@ -1,4 +1,4 @@
-% Latest examples is located at https://github.com/xethru/XeThru-ModuleConnector-Examples.
+% Latest examples is located at https://github.com/xethru/XeThru_ModuleConnector_Examples or https://xethru@dev.azure.com/xethru/XeThruApps/_git/XeThru_ModuleConnector_Examples.
 % 
 % Target module: 
 % X4M200
@@ -21,7 +21,7 @@ add_ModuleConnector_path();
 % add_ModuleConnector_path('win32');
 
 %% User configurations:
-% File or Port from where to stream data. e.g. ./xethru_recording_20180622_113743_Float_Data_recording/xethru_recording_meta.dat or COM3 
+% File or Port from where to stream data. e.g./xethru_recording_20180622_113743_Float_Data_recording/xethru_recording_meta.dat or COM3 
 %input = './xethru_recording_20181116_151220_Sensor_Baseband_Data_recording/xethru_recording_meta.dat';
 input = 'COM13';
 % Whether to output IQ og AP baseband data,0 if you want IQ-baseband

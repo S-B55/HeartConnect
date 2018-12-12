@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """ \example xt_module_print_info.py
 
-Latest examples is located at https://github.com/xethru/XeThru-ModuleConnector-Examples.
+Latest examples is located at https://github.com/xethru/XeThru_ModuleConnector_Examples or https://xethru@dev.azure.com/xethru/XeThruApps/_git/XeThru_ModuleConnector_Examples.
 
 # Target module:
 # X4M200
