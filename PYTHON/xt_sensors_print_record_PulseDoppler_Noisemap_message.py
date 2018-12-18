@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-""" \example xt_sensors_plot_record_PulseDoppler_Noisemap_message.py
+""" \example xt_sensors_print_record_PulseDoppler_Noisemap_message.py
 
 Latest examples is located at https://github.com/xethru/XeThru_ModuleConnector_Examples or https://xethru@dev.azure.com/xethru/XeThruApps/_git/XeThru_ModuleConnector_Examples.
 
@@ -15,7 +15,7 @@ Latest examples is located at https://github.com/xethru/XeThru_ModuleConnector_E
 # xt_modules_print_info.py should be in the same folder
 # xt_modules_record_playback_messages.py should be in the same folder
 
-# Command to run:  "python xt_sensors_plot_record_PulseDoppler_Noisemap_message.py -d com8" or "python3 xt_sensors_plot_record_PulseDoppler_Noisemap_message.py -d com8"
+# Command to run:  "python xt_sensors_print_record_PulseDoppler_Noisemap_message.py -d com8" or "python3 xt_sensors_print_record_PulseDoppler_Noisemap_message.py -d com8"
                   change "com8" with your device name, using "--help" to see other args.
                   
 """
@@ -128,7 +128,7 @@ def configure_sensor_dp_output(device_name, record, datatype, format, dopplers, 
 
 
 def print_dp_messages(xt_sensor, datatype, format, num_messages):
-# Set up state machinery for matrix assembly
+    # Set up state machinery for matrix assembly
     matrix = []
     is_negative = True
     prev_range_idx = -1
@@ -274,9 +274,10 @@ def main():
         except:
             print("Fail to find serial port, please specify it by use -d!")
             raise
-    xt_sensor = configure_sensor_dp_output(device_name, args.record, args.datatype, args.format, args.dopplers, args.num_messages);
+    xt_sensor = configure_sensor_dp_output(
+        device_name, args.record, args.datatype, args.format, args.dopplers, args.num_messages)
     print_dp_messages(xt_sensor, args.datatype,
-                      args.format,args.num_messages)
+                      args.format, args.num_messages)
 
 
 if __name__ == "__main__":
