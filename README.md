@@ -75,5 +75,5 @@ https://www.xethru.com/community/resources/xethru-sensors-introduction.111/
 
 # Repository Address
 Latest ModuleConnector examples can be found at:
-https://github.com/xethru/XeThru_ModuleConnector_Examples.git
-or https://xethru@dev.azure.com/xethru/XeThruApps/_git/XeThru_ModuleConnector_Examples
+* [Github Repo](https://github.com/xethru/XeThru_ModuleConnector_Examples.git)
+* [Azure Repo](https://dev.azure.com/xethru/XeThruApps/_git/XeThru_ModuleConnector_Examples)
