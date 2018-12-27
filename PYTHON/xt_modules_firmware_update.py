@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """ \example xt_module_firmware_update.py
 
-Latest examples is located at https://github.com/xethru/XeThru_ModuleConnector_Examples or https://xethru@dev.azure.com/xethru/XeThruApps/_git/XeThru_ModuleConnector_Examples.
+Latest examples is located at https://github.com/xethru/XeThru_ModuleConnector_Examples or https://dev.azure.com/xethru/XeThruApps/_git/XeThru_ModuleConnector_Examples.
 
 # Target module: 
 # XeThru module using X4 chip, running firmware with bootloader.

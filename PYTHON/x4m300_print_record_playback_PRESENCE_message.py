@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """ \example x4m300_print_record_playback_PRESENCE_message.py
 
-Latest examples is located at https://github.com/xethru/XeThru_ModuleConnector_Examples or https://xethru@dev.azure.com/xethru/XeThruApps/_git/XeThru_ModuleConnector_Examples.
+Latest examples is located at https://github.com/xethru/XeThru_ModuleConnector_Examples or https://dev.azure.com/xethru/XeThruApps/_git/XeThru_ModuleConnector_Examples.
 
 # Target module: X4M300
 

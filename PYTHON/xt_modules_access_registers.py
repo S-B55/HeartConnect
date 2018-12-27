@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """ \example xt_modules_access_registers.py
 
-Latest examples is located at https://github.com/xethru/XeThru_ModuleConnector_Examples or https://xethru@dev.azure.com/xethru/XeThruApps/_git/XeThru_ModuleConnector_Examples.
+Latest examples is located at https://github.com/xethru/XeThru_ModuleConnector_Examples or https://dev.azure.com/xethru/XeThruApps/_git/XeThru_ModuleConnector_Examples.
 
 # Target module: 
 # XeThru moduelse using X4 chip 
