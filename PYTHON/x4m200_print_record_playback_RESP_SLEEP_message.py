@@ -52,7 +52,7 @@ Only one of XTS_ID_PULSEDOPPLER_FLOAT and XTS_ID_PULSEDOPPLER_BYTE can be enable
 """
 x4m200_par_settings = {'detection_zone': (0.4, 2),
                        'sensitivity': 5,
-                       'tx_center_frequency': 3,
+                       'tx_center_frequency': 3, # 3: TX 7.29GHz low band center frequency, 4: TX 8.748GHz low band center frequency.
                        'led_control': (XTID_LED_MODE_OFF, 0),
                        # initialize noisemap everytime when get start (approximately 120s)
                        'noisemap_control': 0b110,
