@@ -42,15 +42,16 @@ from xt_modules_print_info import *
 from xt_modules_record_playback_messages import *
 
 # User settings
+# the following settings are default X4 configuration for X4M200/X4M300 sensors
 x4_par_settings = {'downconversion': 0,  # 0: output rf data; 1: output baseband data
                    'dac_min': 949,
                    'dac_max': 1100,
                    'iterations': 16,
                    'tx_center_frequency': 3,
-                   'tx_power': 1,
+                   'tx_power': 2,
                    'pulses_per_step': 300,
                    'frame_area_offset': 0.18,
-                   'frame_area': (-0.5, 2),
+                   'frame_area': (-0.5, 5),
                    'fps': 17,
                    }
 
