@@ -27,7 +27,7 @@ import sys
 from argparse import ArgumentParser
 
 import numpy as np
-import queue
+from six.moves import queue
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib.colors import cnames
@@ -119,8 +119,6 @@ def plot_radar_raw_data_message(xep, baseband=True, frames_number=1):
         for i in range(len(lines)):
             lines[i].set_data(x, Y[i])
             lines[i].set_3d_properties(q[i])
-            # print q[i][0],
-        # ax.plot_wireframe(X,Y,q)
         fig.canvas.draw()
         return lines
 
@@ -146,8 +144,8 @@ def plot_radar_raw_data_message(xep, baseband=True, frames_number=1):
     colors[0] = 'r'
     lines = [ax.plot(x, Y[i], frames[i], '-', color=colors[i])[0]
              for i in range(frames_number)]
-    anim = FuncAnimation(fig, update_lines, interval=1 /
-                         (2*fps)*1e3, init_func=init, blit=True)
+    anim = FuncAnimation(fig, update_lines, interval=1,
+                         init_func=init, blit=True)
     plt.show()
 
 
@@ -177,7 +175,7 @@ def main():
         "--framesnumber",
         metavar="NUMBER",
         type=int,
-        default=20,
+        default=10,
         dest="frames_number",
         help="Decide how mange frames shown on plotting")
     parser.add_argument(
