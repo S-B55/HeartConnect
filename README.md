@@ -51,6 +51,9 @@ https://www.xethru.com/community/resources/xethru-sensors-introduction.111/
 * [disp_sensor_settings.m ](./MATLAB/disp_sensor_settings.m)
 * [disp_x4_settings.m ](./MATLAB/disp_x4_settings.m)
 
+4. Read recording data directly without using MC
+* [read_baseband_IQ_dat_recording_file.m ](./MATLAB/read_baseband_IQ_dat_recording_file.m)
+
 ## Python examples
 
 1. Profile messages for the normal user
