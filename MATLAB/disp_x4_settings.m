@@ -40,7 +40,7 @@ end
 
 if frequency==3
     freqstr = '6.0 to 8.5 Ghz range, centre=7.29GHz';
-else
+elseif frequency==4
     freqstr = '7.2 to 10.2 GHz range, centre=8.4GHz';
 end
 
