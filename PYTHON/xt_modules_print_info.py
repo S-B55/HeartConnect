@@ -48,7 +48,7 @@ def print_module_info(device_name):
     print("")
     print("********** XeThru Module Information **********")
     print("")
-    print("Received pong= ", hex(pong) + "connection build!")
+    print("Received pong= ", hex(pong) + "  connection build!")
     print("FirmWareID = ", xep.get_system_info(XTID_SSIC_FIRMWAREID))
     print("Version = ", xep.get_system_info(XTID_SSIC_VERSION))
     print("Build = ", xep.get_system_info(XTID_SSIC_BUILD))
