@@ -75,6 +75,8 @@ https://www.xethru.com/community/resources/xethru-sensors-introduction.111/
 * [xep_distance_demo_host.py](./PYTHON/xep_distance_demo_host.py)
 * [xep_sample_direct_path.py](./PYTHON/xep_sample_direct_path.py)
 * [xt_modules_set_certification_mode.py](./PYTHON/xt_modules_set_certification_mode.py)
+* [x4m2x0_plot_sleep_csv_recording_file.py](./PYTHON/x4m2x0_plot_sleep_csv_recording_file.py)
+* [x4m2x0_plot_vitalsigns_csv_recording_file.py](./PYTHON/x4m2x0_plot_vitalsigns_csv_recording_file.py)
 
 # Repository Address
 Latest ModuleConnector examples can be found at:
