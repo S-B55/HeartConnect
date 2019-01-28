@@ -27,7 +27,7 @@ clear
 %% User configurations:
 % File or Port from where to stream data. e.g./xethru_recording_20180622_113743_Float_Data_recording/xethru_recording_meta.dat or COM3 
 % input = './xethru_recording_20181114_154128_Float_Data_recording/xethru_recording_meta.dat'; 
- input = 'com13';
+ input = 'com11';
 % Specify data type for playback/recording.
 data_type = ModuleConnector.DataRecorderInterface.DataType_FloatDataType;
 downconversion = 1; %0: RF data output. 1: baseband IQ data ouput. For data play back, you need you konw which kind data it is and configure correctly here.
@@ -46,6 +46,8 @@ rec = 0;
 dac_min = 949;
 dac_max = 1100;
 iterations = 16;
+tx_center_frequency = 3;
+tx_power = 2;
 pulses_per_step = 300;
 frame_area_offset = 0.18;
 frame_area_start = 0;
@@ -114,8 +116,8 @@ else
     end
 
     xep.x4driver_set_downconversion(downconversion);
-    xep.x4driver_set_tx_center_frequency (3);
-    xep.x4driver_set_tx_power(1); 
+    xep.x4driver_set_tx_center_frequency (tx_center_frequency);
+    xep.x4driver_set_tx_power(tx_power); 
     xep.x4driver_set_iterations(iterations);
     xep.x4driver_set_pulsesperstep(pulses_per_step);
     xep.x4driver_set_dac_min(dac_min);
