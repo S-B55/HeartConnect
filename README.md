@@ -12,6 +12,9 @@ https://www.xethru.com/community/resources/module-connector-raspberry-pi.81/
 There is one application note intruducing how to use Module Connector:
 https://www.xethru.com/community/resources/xethru-sensors-introduction.111/
 
+Please make sure your sensor are running latest firmware. It can be updated from the latest XeThru Explorer:
+https://www.xethru.com/community/resources/categories/xethru-explorer.3/
+
 # Example Folder Structure
 
 * [/CPP](./CPP)
