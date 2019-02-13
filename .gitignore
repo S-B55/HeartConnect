@@ -7,7 +7,6 @@
 /lib64
 /CPP/*.dll
 /CPP/*.a
-/CPP/Makefile
 /CPP/*.exe
 
 # Whitelist some files
