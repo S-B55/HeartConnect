@@ -22,7 +22,7 @@ function add_ModuleConnector_path(optarg)
     end
     if ispc
         addpath('../../lib64/');
-    elseif ismac || islinux
+    elseif ismac || isunix
         addpath('../../lib/');
     end
 end
